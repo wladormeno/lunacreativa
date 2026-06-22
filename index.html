@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LUNA Comunicación Creativa</title>
+
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+
+<style>
+/* ── VARIABLES & RESET ── */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --gold: #c9a84c; 
+  --black: #070707; 
+  --dark: #0f0f0f; 
+  --white: #ffffff;
+  --gray: #888888;
+  --lg: #d8d3cb;
+}
+html { scroll-behavior: smooth; }
+body {
+  width: 100%; min-height: 100vh; background: var(--black); 
+  font-family: 'DM Sans', sans-serif; color: var(--white); 
+  overflow-x: hidden;
+}
+
+/* ── HEADER & NAV CORREGIDO ── */
+header {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 600;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 15px 40px; 
+  background: rgba(7,7,7,0.9); 
+  border-bottom: 1px solid rgba(201,168,76,0.2); backdrop-filter: blur(12px);
+}
+.header-container {
+  width: 100%; max-width: 1400px; margin: 0 auto;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.logo-container a {
+  display: flex; align-items: center; gap: 20px;
+  font-family: 'Montserrat', sans-serif; font-size: 30px; font-weight: 800; 
+  color: var(--white); text-decoration: none; letter-spacing: 2px;
+}
+.logo-container span { color: var(--white); }
+.header-logo-img {
+  height: 60px; width: auto; display: block;
+}
+
+nav ul { list-style: none; display: flex; gap: 30px; }
+nav a {
+  color: var(--white); text-decoration: none; font-size: 16px; 
+  letter-spacing: 2px; text-transform: uppercase; font-weight: 600;
+  transition: color 0.3s;
+}
+nav a:hover { color: var(--gold); }
+
+/* ── LAYOUT SECCIONES (LÍNEAS GRISES ELIMINADAS) ── */
+main { padding-top: 90px; }
+.section {
+  width: 100%; padding: 100px 20px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  border-bottom: none; 
+  background: var(--black); 
+}
+.section:nth-child(even) { background: var(--black); } 
+.inn { width: 100%; max-width: 900px; position: relative; margin: 0 auto; }
+.nlbl {
+  font-size: 20px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold);
+  font-weight: 600; margin-bottom: 16px; border-left: 3px solid var(--gold); padding-left: 10px;
+}
+.nh1 { font-family: 'Montserrat', serif; font-size: 42px; font-weight: 700; line-height: 1.1; margin-bottom: 12px; color: var(--white); }
+.ntag { font-size: 20px; color: rgba(255,255,255,0.6); margin-bottom: 24px; font-weight: 300; line-height: 1.6; }
+
+/* ── HERO SLIDER ── */
+#hero {
+  position: relative; width: 100%; height: calc(100vh - 90px);
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden; background: var(--black); padding: 0;
+}
+.slide {
+  position: absolute; inset: 0; opacity: 0;
+  display: flex; align-items: center; justify-content: center;
+  pointer-events: none; transition: opacity 0.8s ease-in-out 0s;
+}
+.slide.active { 
+  opacity: 1; pointer-events: auto; transition: opacity 0.8s ease-in-out 0.8s;
+}
+.slide-bg {
+  position: absolute; inset: 0; background-size: cover; background-position: center;
+  filter: brightness(0.4); z-index: 1; background-color: #111;
+}
+.slide-content { position: relative; z-index: 2; text-align: center; width: 100%; padding: 0 20px; }
+.slide-text {
+  font-family: 'Montserrat', sans-serif; font-size: 6vw; font-weight: 800;
+  color: var(--gold); text-transform: uppercase; letter-spacing: 4px;
+  transform: translateY(20px); transition: transform 0.8s ease-out 0s;
+}
+.slide.active .slide-text { 
+  transform: translateY(0); transition: transform 0.8s ease-out 0.8s;
+}
+
+/* ── MÉTODO LUNA ── */
+.timeline { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 24px; position: relative; }
+.timeline::before { content: ''; position: absolute; top: 26px; left: 0; right: 0; height: 1px; background: rgba(201,168,76,0.2); }
+.tstep { flex: 1; min-width: 140px; position: relative; cursor: pointer; padding-top: 60px; }
+.tstep-dot {
+  position: absolute; top: 18px; left: 0; width: 18px; height: 18px; border-radius: 50%;
+  border: 2px solid rgba(201,168,76,0.4); background: var(--black);
+  transition: border-color 0.3s, background 0.3s, transform 0.3s;
+}
+.tstep.active .tstep-dot { border-color: var(--gold); background: var(--gold); transform: scale(1.3); }
+.tstep.done .tstep-dot { border-color: var(--gold); background: rgba(201,168,76,0.3); }
+.tstep-num { font-family: 'Cormorant Garamond', serif; font-size: 25px; color: rgba(255,255,255,0.3); position: absolute; top: 19px; left: 28px; transition: color 0.3s; }
+.tstep.active .tstep-num, .tstep.done .tstep-num { color: var(--gold); }
+.tstep-t { font-size: 20px; font-weight: 600; color: var(--white); margin-bottom: 8px; transition: color 0.3s;}
+.tstep:hover .tstep-t, .tstep.active .tstep-t { color: var(--gold); }
+.tstep-d { font-size: 18px; color: rgba(255,255,255,0.5); line-height: 1.5; }
+#proc-detail {
+  margin-top: 30px; padding: 20px 24px; background: rgba(255,255,255,0.03);
+  border-left: 2px solid var(--gold); min-height: 50px; transition: opacity 0.3s;
+}
+#proc-detail p { font-size: 18px; color: rgba(255,255,255,0.7); line-height: 1.7; }
+
+/* ── VIDEO SHOWREEL ── */
+.video-grid { display: flex; flex-direction: column; gap: 30px; width: 100%; margin-top: 30px; }
+.video-wrapper {
+  position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; width: 100%;
+  border: 1px solid rgba(201,168,76,0.2); border-radius: 8px; background: #000;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+.video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+
+/* ── TARJETA DE SERVICIOS ── */
+.services-card {
+  background: rgba(255,255,255,0.02); border: 1px solid rgba(201,168,76,0.15);
+  border-radius: 8px; padding: 40px; margin-top: 30px; position: relative;
+  overflow: hidden; transition: border-color 0.3s;
+}
+.services-card:hover { border-color: rgba(201,168,76,0.4); }
+.services-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--gold); }
+.srv-list {
+  list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;
+}
+.srv-list li {
+  font-size: 18px; color: rgba(255,255,255,0.8); display: flex; align-items: flex-start; gap: 12px; line-height: 1.5;
+}
+.srv-list li::before { content: '✦'; color: var(--gold); font-size: 14px; margin-top: 2px; }
+
+/* ── PRECIOS MODULARES ── */
+.pricing-group { margin-top: 40px; margin-bottom: 60px; }
+.pricing-title { font-family: 'Cormorant Garamond', serif; font-size: 24px; color: var(--gold); border-bottom: 0.5px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 24px; }
+.pgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+.pcard { 
+  background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.1); 
+  border-radius: 8px; padding: 30px; display: flex; flex-direction: column;
+  transition: transform 0.3s, border-color 0.3s;
+}
+.pcard:hover { transform: translateY(-5px); border-color: rgba(201,168,76,0.4); }
+.pcard.premium { background: rgba(201,168,76,0.03); border-color: rgba(201,168,76,0.3); position: relative; overflow: hidden; }
+.pc-cat { font-size: 20px; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; font-weight: 600; margin-bottom: 8px; }
+.pc-name { font-size: 20px; font-weight: 600; color: var(--white); margin-bottom: 16px; }
+.pc-term { font-size: 11px; color: rgba(255,255,255,0.4); margin-bottom: 24px; padding-bottom: 24px; border-bottom: 0.5px solid rgba(255,255,255,0.1); }
+.pc-list { list-style: none; display: flex; flex-direction: column; gap: 12px; flex: 1; margin-bottom: 24px; }
+.pc-list li { font-size: 18px; color: rgba(255,255,255,0.7); display: flex; align-items: flex-start; gap: 10px; line-height: 1.5; }
+.pc-list li::before { content: '✓'; color: var(--gold); font-weight: bold; font-size: 12px; }
+.pc-btn { text-align: center; padding: 12px; border: 1px solid var(--gold); border-radius: 4px; color: var(--gold); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; transition: background 0.3s; text-decoration: none; cursor: pointer;}
+.pcard.premium .pc-btn { background: var(--gold); color: var(--black); }
+.pcard:hover .pc-btn { background: var(--gold); color: var(--black); }
+
+/* ── CARRUSEL DE CLIENTES TRANSPARENTE ── */
+#clientes {
+  background: transparent; 
+  padding: 40px 0;
+  border-top: none; 
+  border-bottom: none; 
+  overflow: hidden; 
+  width: 100%; 
+  display: flex;
+  margin-top: -100px; 
+  margin-bottom: 60px; 
+}
+.carousel-track {
+  display: flex; align-items: center; gap: 80px; width: max-content;
+  animation: scroll 35s linear infinite;
+}
+.carousel-track:hover { animation-play-state: paused; }
+.logo-item { 
+  height: 70px; 
+  width: auto; 
+  object-fit: contain; 
+  filter: grayscale(100%) opacity(0.4); 
+  transition: filter 0.4s ease, opacity 0.4s ease; 
+  display: block; 
+}
+.logo-item:hover { 
+  filter: grayscale(0%) opacity(1); 
+}
+@keyframes scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ── CONTACTO Y FORMULARIO ── */
+#contacto {
+  scroll-margin-top: 90px; /* Margen de compensación para pantallas de escritorio */
+}
+.contact-wrapper { display: flex; flex-direction: column; gap: 24px; width: 100%; }
+.contact-info-col p { font-size: 18px; color: rgba(255,255,255,0.6); line-height: 1.8; text-align: center; }
+.contact-form {
+  background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.1); 
+  border-radius: 8px; padding: 40px; display: flex; flex-direction: column; gap: 18px; width: 100%;
+}
+.c-field { display: flex; flex-direction: column; gap: 6px; }
+.c-label { font-size: 14px; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
+.c-input, .c-select, .c-textarea {
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 4px; padding: 14px; color: var(--white);
+  font-family: 'DM Sans', sans-serif; font-size: 14px; outline: none; transition: border-color 0.2s;
+}
+.c-select option { background: var(--black); color: var(--white); }
+.c-input:focus, .c-select:focus, .c-textarea:focus { border-color: var(--gold); }
+.c-textarea { resize: vertical; min-height: 120px; }
+.c-submit {
+  background: var(--gold); color: var(--black); border: none; border-radius: 4px;
+  padding: 14px; font-size: 12px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 1px; cursor: pointer; margin-top: 10px; transition: filter 0.2s; font-family: 'DM Sans', sans-serif;
+}
+.c-submit:hover { filter: brightness(1.15); }
+.c-submit:disabled { background: var(--gray); cursor: not-allowed; }
+
+/* ── TOAST ── */
+#toast {
+  position: fixed; top: 100px; left: 50%; transform: translateX(-50%) translateY(-64px);
+  background: rgba(201,168,76,0.9); border: 0.5px solid var(--gold);
+  color: var(--black); font-weight: bold; font-size: 13px; padding: 12px 24px; border-radius: 20px;
+  z-index: 900; transition: transform 0.4s ease, opacity 0.4s ease; pointer-events: none; letter-spacing: 1px; opacity: 0;
+}
+#toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+#toast.error { background: #ea4335; border-color: #ea4335; color: var(--white); }
+
+@media (max-width: 768px) {
+  header { padding: 15px 20px; }
+  .header-container { flex-direction: column; gap: 15px; }
+  .timeline::before { display: none; }
+  .tstep { padding-top: 0; padding-left: 36px; margin-bottom: 20px; }
+  .tstep-dot { top: 2px; left: 0; }
+  .tstep-num { top: 3px; left: 30px; }
+  .contact-form { padding: 24px; }
+  #clientes { margin-top: -100px; }
+  #contacto {
+    scroll-margin-top: 155px; /* Margen adaptado al menú colapsado vertical en móviles */
+  }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-container">
+    <div class="logo-container">
+      <a href="#">
+        <img src="logo-luna.png" alt="LUNA" class="header-logo-img">
+        <span></span>
+      </a>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="#metodo">Método</a></li>
+        <li><a href="#showreel">Portafolio</a></li>
+        <li><a href="#servicios">Servicios</a></li>
+        <li><a href="#tarifas">Planes</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section id="hero">
+    <div class="slide active">
+      <div class="slide-bg"></div>
+      <div class="slide-content"><div class="slide-text">IDENTIFICAMOS VALORES</div></div>
+    </div>
+    <div class="slide">
+      <div class="slide-bg"></div>
+      <div class="slide-content"><div class="slide-text">CREAMOS CONTENIDO</div></div>
+    </div>
+    <div class="slide">
+      <div class="slide-bg"></div>
+      <div class="slide-content"><div class="slide-text">CONECTAMOS</div></div>
+    </div>
+    <div class="slide">
+      <div class="slide-bg"></div>
+      <div class="slide-content"><div class="slide-text">GENERAMOS IMPACTO</div></div>
+    </div>
+  </section>
+
+  <section class="section" id="metodo">
+    <div class="inn">
+      <div class="nlbl">El Método LUNA</div>
+      <div class="nh1">Cinco pasos.<br>Crecimiento predecible.</div>
+      <p class="ntag">No creemos en las fórmulas genéricas. Construimos un puente magnético entre la autenticidad de tu marca y las necesidades reales de tu mercado.</p>
+      
+      <div class="timeline">
+        <div class="tstep active" onclick="selectPaso(0)">
+          <div class="tstep-dot"></div><span class="tstep-num">01</span>
+          <div class="tstep-t">Descubrir</div>
+          <div class="tstep-d">Rastreamos el ADN y los valores de tu organización.</div>
+        </div>
+        <div class="tstep" onclick="selectPaso(1)">
+          <div class="tstep-dot"></div><span class="tstep-num">02</span>
+          <div class="tstep-t">Identificar</div>
+          <div class="tstep-d">Encontramos el mercado que valora lo que tú eres.</div>
+        </div>
+        <div class="tstep" onclick="selectPaso(2)">
+          <div class="tstep-dot"></div><span class="tstep-num">03</span>
+          <div class="tstep-t">Elaborar</div>
+          <div class="tstep-d">Creamos contenido audiovisual premium de tu relato.</div>
+        </div>
+        <div class="tstep" onclick="selectPaso(3)">
+          <div class="tstep-dot"></div><span class="tstep-num">04</span>
+          <div class="tstep-t">Implementar</div>
+          <div class="tstep-d">Desplegamos embudos de pauta publicitaria digital.</div>
+        </div>
+        <div class="tstep" onclick="selectPaso(4)">
+          <div class="tstep-dot"></div><span class="tstep-num">05</span>
+          <div class="tstep-t">Medir</div>
+          <div class="tstep-d">Monitoreamos y optimizamos el retorno en tiempo real.</div>
+        </div>
+      </div>
+      
+      <div id="proc-detail">
+        <p id="proc-detail-txt">
+          <strong>01. Descubrimos tus valores (Branding y Posicionamiento):</strong> Dejamos de lado lo genérico. Mediante auditorías de identidad, extraemos la mística y el propósito real de tu negocio —ya sea la herencia centenaria de una viña o el confort de una infraestructura hotelera— para consolidar un posicionamiento sólido y coherente.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="showreel">
+    <div class="inn">
+      <div class="nlbl">Portafolio Audiovisual</div>
+      <div class="nh1">Nuestra Visión en Movimiento</div>
+      <p class="ntag">Descubre la calidad cinematográfica y el storytelling detrás de nuestras producciones corporativas y de destino.</p>
+      
+      <div class="video-grid">
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/guR7lwyTNx0" title="LUNA - Showreel 1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/MRRr-tuuY48" title="LUNA - Showreel 2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/mUL-JCC8nY8" title="LUNA - Showreel 3" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/nEDFc3iplAk" title="LUNA - Showreel 4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/bZaxslG1q9w" title="LUNA - Showreel 5" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="servicios">
+    <div class="inn">
+      <div class="nlbl">Nuestros Servicios</div>
+      <div class="nh1">Soluciones Integrales</div>
+      <p class="ntag">Cubrimos todas las necesidades de comunicación, production y desarrollo digital para posicionar tu marca en el mercado.</p>
+      
+      <div class="services-card">
+        <ul class="srv-list">
+          <li>Desarrollo de Estrategias de Comunicación Digital</li>
+          <li>Branding y Posicionamiento de Marca</li>
+          <li>Producción de Contenido Multimedia</li>
+          <li>Gestión de Medios</li>
+          <li>Entrenamiento en Comunicación y Media Training</li>
+          <li>Consultoría en Estrategias de Marketing Digital</li>
+          <li>Asesoramiento en Innovación Tecnológica</li>
+          <li>Producción Técnica y Gestión Cultural</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="tarifas">
+    <div class="inn">
+      <div class="nlbl">Inversión y Planes</div>
+      <div class="nh1">Estructura Modular</div>
+      <p class="ntag">Transformamos ideas en sistemas predecibles. Un modelo transparente estructurado en Fases de Activación y Retainers Mensuales de crecimiento.</p>
+      
+      <div class="pricing-group">
+        <div class="pricing-title">Fase 1: Packs de Activación de Campaña</div>
+        <div class="pgrid">
+          <div class="pcard">
+            <div class="pc-cat">PyMEs / Boutique</div>
+            <div class="pc-name">Pack Activación Base</div>
+            <div class="pc-term">Condiciones a evaluar según proyecto</div>
+            <ul class="pc-list">
+              <li>Ajuste de posicionamiento digital y refresco estacional de marca.</li>
+              <li>Cápsulas en formato vertical (9:16) optimizadas para Reels/TikTok.</li>
+              <li>Sonido directo (ASMR) y musicalización licenciada.</li>
+              <li>Definición de cliente ideal y canales prioritarios.</li>
+            </ul>
+            <a href="#contacto" class="pc-btn" onclick="selectService('pack-base')">Cotizar Pack Activación Base</a>
+          </div>
+          <div class="pcard premium">
+            <div class="pc-cat">Corporativo / Hoteles / MICE</div>
+            <div class="pc-name">Pack Activación Premium</div>
+            <div class="pc-term">Condiciones a evaluar según proyecto</div>
+            <ul class="pc-list">
+              <li>Auditoría corporativa completa y manual de campaña.</li>
+              <li>Posicionamiento en prensa (PR) en medios nacionales.</li>
+              <li>1 Video Spot Principal (16:9) nivel cinematográfico.</li>
+              <li>4 Cápsulas Verticales de experiencia en terreno.</li>
+              <li>Derechos totales de uso comercial.</li>
+            </ul>
+            <a href="#contacto" class="pc-btn" onclick="selectService('pack-premium')">Cotizar Pack Activación Premium</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="pricing-group">
+        <div class="pricing-title">Fase 2: Retainers de Aceleración Mensual</div>
+        <div class="pgrid">
+          <div class="pcard">
+            <div class="pc-cat">Enfoque: Conversión Directa</div>
+            <div class="pc-name">Plan Aceleración Básico</div>
+            <div class="pc-term">Contrato base de 3 meses. No incluye pauta.</div>
+            <ul class="pc-list">
+              <li>Implementación de campaigns en Meta Ads (Facebook/Instagram).</li>
+              <li>Enfoque en captación de reservas y leads de fin de semana.</li>
+              <li>Optimización semanal de anuncios y presupuestos.</li>
+              <li>Reporte mensual de costo por lead (CPL) y retorno.</li>
+            </ul>
+            <a href="#contacto" class="pc-btn" onclick="selectService('retainer-base')">Cotizar Plan Aceleración Básico</a>
+          </div>
+          <div class="pcard premium">
+            <div class="pc-cat">Enfoque: Omnicanal Institucional</div>
+            <div class="pc-name">Plan Aceleración Premium</div>
+            <div class="pc-term">Contrato base de 3 meses. No incluye pauta.</div>
+            <ul class="pc-list">
+              <li>Despliegue integral: Meta Ads, Google Ads y LinkedIn Ads (B2B/MICE).</li>
+              <li>Gestión activa de la comunidad digital asociada.</li>
+              <li>Optimización diaria de pujas y segmentación quirúrgica.</li>
+              <li>Dashboard interactivo con KPIs de alcance y conversiones in tiempo real.</li>
+            </ul>
+            <a href="#contacto" class="pc-btn" onclick="selectService('retainer-premium')">Cotizar Plan Aceleración Premium</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="contacto">
+    <div id="clientes">
+      <div class="carousel-track" id="track">
+        <img src="Biobio.png" alt="Biobio" class="logo-item">
+        <img src="CGE.png" alt="Logo CGE" class="logo-item">
+        <img src="Coemco.png" alt="Logo Coemco" class="logo-item">
+        <img src="CONTUR.png" alt="Logo CONTUR" class="logo-item">
+        <img src="CORFO.png" alt="Logo CORFO" class="logo-item">
+        <img src="CorpArauco.png" alt="Logo CorpArauco" class="logo-item">
+        <img src="Esquerré.png" alt="Logo Esquerré" class="logo-item">
+        <img src="GORE_ÑUBLE.png" alt="Logo GORE_ÑUBLE" class="logo-item">
+        <img src="IVG.png" alt="Logo IVG" class="logo-item">
+        <img src="CC.png" alt="Logo CC" class="logo-item">
+        <img src="MINCAP.png" alt="Logo MINCAP" class="logo-item">
+        <img src="PMPRS.png" alt="Logo PMPRS" class="logo-item">
+        <img src="Sernatur.png" alt="Logo Sernatur" class="logo-item">
+        <img src="slep.png" alt="Logo slep" class="logo-item">
+        <img src="USS.png" alt="Logo USS" class="logo-item">
+      </div>
+    </div>
+
+    <div class="inn">
+      <div class="nlbl">Contacto</div>
+      <div class="nh1">Hablemos de tu proyecto</div>
+      <p class="ntag" style="margin-bottom: 40px;">Déjanos tus datos y un resumen de lo que buscas. Nuestro equipo se pondrá en contacto contigo para agendar una reunión de diagnóstico.</p>
+      
+      <div class="contact-wrapper">
+        <div class="contact-form-col">
+          <form class="contact-form" id="main-contact-form" action="https://formsubmit.co/ajax/tu-correo@empresa.com" method="POST" onsubmit="submitContact(event)">
+            <input type="text" name="_honey" style="display:none">
+            <input type="hidden" name="_subject" value="Nuevo Lead: LUNA Comunicación Creativa">
+            
+            <div class="c-field">
+              <label class="c-label">Nombre o Empresa</label>
+              <input type="text" name="Nombre_Empresa" class="c-input" required placeholder="Ej. Viña Los Álamos">
+            </div>
+            <div class="c-field">
+              <label class="c-label">Correo Electrónico</label>
+              <input type="email" name="Email" class="c-input" required placeholder="tu@correo.com">
+            </div>
+            <div class="c-field">
+              <label class="c-label">Tipo de Servicio de Interés</label>
+              <select name="Servicio_Interes" class="c-select" id="service-selector" required>
+                <option value="" disabled selected>Selecciona una opción...</option>
+                <optgroup label="Nuestros Servicios">
+                  <option value="estrategias-digital">Desarrollo de Estrategias de Comunicación Digital</option>
+                  <option value="branding">Branding y Posicionamiento de Marca</option>
+                  <option value="multimedia">Producción de Contenido Multimedia</option>
+                  <option value="medios">Gestión de Medios</option>
+                  <option value="media-training">Entrenamiento en Comunicación y Media Training</option>
+                  <option value="marketing">Consultoría en Estrategias de Marketing Digital</option>
+                  <option value="innovacion">Asesoramiento en Innovación Tecnológica</option>
+                  <option value="gestion-cultural">Producción Técnica y Gestión Cultural</option>
+                </optgroup>
+                <optgroup label="Planes y Packs">
+                  <option value="pack-base">Pack Activación Base</option>
+                  <option value="pack-premium">Pack Activación Premium</option>
+                  <option value="retainer-base">Plan Mensual Básico</option>
+                  <option value="retainer-premium">Plan Mensual Premium</option>
+                </optgroup>
+                <option value="otro">Otro Requerimiento / Proyecto a Medida</option>
+              </select>
+            </div>
+            <div class="c-field">
+              <label class="c-label">Mensaje o Detalles del Proyecto</label>
+              <textarea name="Mensaje" class="c-textarea" required placeholder="Cuéntanos brevemente sobre los objetivos y dolores que buscas resolver..."></textarea>
+            </div>
+            <button type="submit" class="c-submit" id="submit-btn">Enviar Mensaje</button>
+          </form>
+        </div>
+        
+        <div class="contact-info-col" style="margin-top: 20px;">
+          <p>Barros Arana 492 Of. 78 Torre Ligure, Concepción — Región del Biobío, Chile</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div id="toast">✓ Mensaje enviado correctamente</div>
+
+<script>
+/* ── LÓGICA DE HERO SLIDER ── */
+document.addEventListener('DOMContentLoaded', () => {
+  const slides = document.querySelectorAll('.slide');
+  let currentSlide = 0;
+
+  function nextSlide() {
+    if(slides.length === 0) return;
+    slides[currentSlide].classList.remove('active');
+    currentSlide = (currentSlide + 1) % slides.length;
+    slides[currentSlide].classList.add('active');
+  }
+  setInterval(nextSlide, 3500);
+
+  /* ── CARRUSEL INFINITO DE CLIENTES CORREGIDO ── */
+  const track = document.getElementById('track');
+  if(track) {
+    const clone = track.innerHTML;
+    track.innerHTML += clone;
+  }
+});
+
+/* ── INTERACCIONES DE FORMULARIO DE CONTACTO ── */
+function selectService(value) {
+  const selector = document.getElementById('service-selector');
+  if(selector) selector.value = value;
+}
+
+/* ── ENVÍO ASÍNCRONO DEL FORMULARIO ── */
+function submitContact(e) {
+  e.preventDefault();
+  
+  const form = e.target;
+  const btn = document.getElementById('submit-btn');
+  const toast = document.getElementById('toast');
+  
+  btn.disabled = true;
+  btn.textContent = 'Enviando...';
+
+  fetch(form.action, {
+    method: 'POST',
+    body: new FormData(form),
+    headers: { 'Accept': 'application/json' }
+  })
+  .then(response => {
+    if (response.ok) {
+      toast.textContent = '✓ Mensaje enviado. El equipo de LUNA te contactará pronto.';
+      toast.classList.remove('error');
+      toast.classList.add('show');
+      form.reset();
+    } else {
+      throw new Error('Error en el servidor');
+    }
+  })
+  .catch(error => {
+    toast.textContent = '✕ Error al enviar el mensaje. Inténtalo de nuevo.';
+    toast.classList.add('show', 'error');
+  })
+  .finally(() => {
+    btn.disabled = false;
+    btn.textContent = 'Enviar Mensaje';
+    setTimeout(() => toast.classList.remove('show', 'error'), 4500);
+  });
+}
+
+/* ── MÉTODO LUNA (5 PASOS) ── */
+const PASO_DETAILS = [
+  "<strong>01. Descubrimos tus valores (Branding y Posicionamiento):</strong> Dejamos de lado lo genérico. Mediante auditorías de identidad, extraemos la mística y el propósito real de tu negocio —ya sea la herencia centenaria de una viña o el confort de una infraestructura hotelera— para consolidar un posicionamiento sólido y coherente.",
+  "<strong>02. Identificamos tu mercado idóneo (Segmentación Estratégica):</strong> Analizamos el mercado local y nacional para encontrar el nicho exacto que conecta, valora y está dispuesto a pagar por tu oferta, definiendo perfiles de cliente ideal y canales prioritarios de abordaje.",
+  "<strong>03. Elaboramos el contenido perfecto (Cápsulas Audiovisuales):</strong> Traducimos tus valores en piezas narrativas de alta gama. Diseñamos y producimos microdocumentales y videos dinámicos optimizados para conversión que hacen sentir la experiencia puertas adentro.",
+  "<strong>04. Implementamos la estrategia (Estrategia Comercial Digital):</strong> Desplegamos campaigns publicitarias de alta precisión (Meta Ads, Google Ads, LinkedIn) configuradas para romper la estacionalidad, automatizar la captura de prospectos y generar reservas directas.",
+  "<strong>05. Medimos, optimizamos y fidelizamos (Retorno e Impacto):</strong> Lo que no se mide, no evoluciona. Monitoreamos sistemáticamente el rendimiento a través de KPIs clave, optimizando la inversión para maximizar el retorno y construir relaciones comerciales a largo plazo."
+];
+
+function selectPaso(i) {
+  document.querySelectorAll('.tstep').forEach((s, j) => {
+    s.classList.toggle('active', j === i);
+    s.classList.toggle('done', j < i);
+  });
+  const detailTxt = document.getElementById('proc-detail-txt');
+  if(detailTxt) detailTxt.innerHTML = PASO_DETAILS[i];
+}
+</script>
+</body>
+</html>
