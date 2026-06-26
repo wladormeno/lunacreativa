@@ -346,31 +346,9 @@ main { padding-top: 90px; }
 #toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
 #toast.error { background: #ea4335; border-color: #ea4335; color: var(--white); }
 
-/* ── MEDIA QUERY RESPONSIVE CORREGIDO ── */
 @media (max-width: 768px) {
   header { padding: 15px 20px; }
-  .header-container { flex-direction: column; gap: 12px; text-align: center; }
-  
-  /* Ajustes estéticos de marca en móvil */
-  .brand-name { font-size: 22px; letter-spacing: 6px; }
-  .brand-tag { font-size: 9px; letter-spacing: 2px; }
-  
-  /* El Menú ahora envuelve de forma adaptativa y centrada */
-  nav { width: 100%; }
-  nav ul { 
-    justify-content: center; 
-    gap: 8px 16px; 
-    flex-wrap: wrap; 
-  }
-  nav a { 
-    font-size: 12px; 
-    letter-spacing: 1px; 
-  }
-  
-  /* Compensa el nuevo alto del menú en pantallas móviles */
-  main { padding-top: 135px; }
-  #hero { height: calc(100vh - 135px); }
-  
+  .header-container { flex-direction: column; gap: 15px; }
   .timeline::before { display: none; }
   .tstep { padding-top: 0; padding-left: 36px; margin-bottom: 20px; }
   .tstep-dot { top: 2px; left: 0; }
@@ -477,7 +455,7 @@ main { padding-top: 90px; }
   <section class="section" id="metodo">
     <div class="inn">
       <div class="nlbl"><i data-lucide="compass"></i>El Método LUNA</div>
-      <div class="nh1">Cinco pasos.<br>Crecimiento predecible.</div>
+      <div class="nh1">Cinco pasos:<br>Crecimiento predecible.</div>
       <p class="ntag">No creemos en las fórmulas genéricas. Creamos una conexión genuina entre la autenticidad de tu marca y las necesidades reales de tu mercado.</p>
       
       <div class="timeline">
@@ -816,8 +794,8 @@ function submitContact(e) {
 
 /* ── MÉTODO LUNA (5 PASOS) ── */
 const PASO_DETAILS = [
-  "<strong>01. Descubrimos tus valores (Branding y Posicionamiento):</strong> Dejamos de lado lo genérico. Mediante auditorías de identidad, extraemos la mística y el propósito real de tu negocio —ya sea la herencia centenaria de una viña o el confort de una infraestructura hotelera— para consolidar un posicionamiento sólido y coherente.",
-  "<strong>02. Identificamos tu mercado idóneo (Segmentación Estratégica):</strong> Analizamos el mercado local y nacional para encontrar el nicho exacto que conecta, valora y está dispuesto a pagar por tu oferta, defining perfiles de cliente ideal y canales prioritarios de abordaje.",
+  "<strong>01. Descubrimos tus valores (Branding y Posicionamiento):</strong> Dejamos de lado lo genérico. Mediante auditorías de identidad, extraemos la mística y el propósito real de tu negocio —ya sea la herencia centenaria de una viña o el confort de una infraestructura hotelera— para consolidar un posicionamiento sólido y coherentee.",
+  "<strong>02. Identificamos tu mercado idóneo (Segmentación Estratégica):</strong> Analizamos el mercado local y nacional para encontrar el nicho exacto que conecta, valora y está dispuesto a pagar por tu oferta, definiendo perfiles de cliente ideal y canales prioritarios de abordaje.",
   "<strong>03. Elaboramos el contenido perfecto (Cápsulas Audiovisuales):</strong> Traducimos tus valores en piezas narrativas de alta gama. Diseñamos y producimos microdocumentales y videos dinámicos optimizados para conversión que hacen sentir la experiencia puertas adentro.",
   "<strong>04. Implementamos la estrategia (Estrategia Comercial Digital):</strong> Desplegamos campaigns publicitarias de alta precisión (Meta Ads, Google Ads, LinkedIn) configuradas para romper la estacionalidad, automatizar la captura de prospectos y generar reservas directas.",
   "<strong>05. Medimos, optimizamos y fidelizamos (Retorno e Impacto):</strong> Lo que no se mide, no evoluciona. Monitoreamos sistemáticamente el rendimiento a través de KPIs clave, optimizando la inversión para maximizar el retorno y construir relaciones comerciales a largo plazo."
