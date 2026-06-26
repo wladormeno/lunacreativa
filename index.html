@@ -346,7 +346,7 @@ main { padding-top: 90px; }
 #toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
 #toast.error { background: #ea4335; border-color: #ea4335; color: var(--white); }
 
-/* ── MEDIA QUERY RESPONSIVE CORREGIDO ── */
+/* ── MEDIA QUERY RESPONSIVE COMPLETA ── */
 @media (max-width: 768px) {
   header { padding: 15px 20px; }
   .header-container { flex-direction: column; gap: 12px; text-align: center; }
@@ -368,20 +368,25 @@ main { padding-top: 90px; }
   main { padding-top: 135px; }
   #hero { height: calc(100vh - 135px); }
   
-  /* ── CORRECCIÓN MÉTODO LUNA EN MÓVIL ── */
+  /* ── CORRECCIÓN MÉTODO LUNA EN MÓVIL (NÚMEROS ARRIBA) ── */
   .timeline::before { display: none; }
   .tstep { 
     padding-top: 0; 
-    padding-left: 75px; /* Más espacio a la izquierda para actuar como columna */
-    margin-bottom: 25px; 
+    padding-left: 32px; /* Margen para albergar el tstep-dot */
+    margin-bottom: 30px; 
+    width: 100%;
+    flex: none;
+    display: flex;
+    flex-direction: column; /* Apilamiento vertical */
   }
   .tstep-dot { 
     top: 6px; 
     left: 0; 
   }
   .tstep-num { 
-    top: 2px; 
-    left: 26px; /* Desplaza el número para que no choque con el título */
+    position: static; /* Sale del flujo absoluto */
+    display: block;
+    margin-bottom: 6px; /* Separación con el título */
     font-size: 20px; 
   }
   
@@ -456,14 +461,14 @@ main { padding-top: 90px; }
   <section class="section" id="confianza">
     <div class="inn">
       <div class="nlbl"><i data-lucide="sparkles"></i>Micromomentos · Señales que conectan</div>
-      <div class="nh1">El mensaje indicado,<br>en el momento justo.</div>
+      <div class="nh1">El mensaje indicado, en el momento justo.</div>
       <p class="ntag">La confianza y la fidelidad se construyen en pequeños instantes. Cada pieza que creamos emite las señales oportunas para que tu audiencia sienta, confíe y se sienta atraída por tu marca.</p>
 
       <div class="signals">
         <div class="sig">
           <div class="sig-ico"><i data-lucide="heart"></i></div>
           <h3>Sentir</h3>
-          <p>Activamos la emotion justa en el primer instante: conectar antes de explicar es lo que hace memorable a una marca.</p>
+          <p>Activamos la emoción justa en el primer instante: conectar antes de explicar es lo que hace memorable a una marca.</p>
         </div>
         <div class="sig">
           <div class="sig-ico"><i data-lucide="shield-check"></i></div>
@@ -487,7 +492,7 @@ main { padding-top: 90px; }
   <section class="section" id="metodo">
     <div class="inn">
       <div class="nlbl"><i data-lucide="compass"></i>El Método LUNA</div>
-      <div class="nh1">Cinco pasos:<br>Crecimiento predecible.</div>
+      <div class="nh1">Cinco pasos: Crecimiento predecible.</div>
       <p class="ntag">No creemos en las fórmulas genéricas. Creamos una conexión genuina entre la autenticidad de tu marca y las necesidades reales de tu mercado.</p>
       
       <div class="timeline">
