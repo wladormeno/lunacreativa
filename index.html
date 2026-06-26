@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LUNA Comunicación Creativa</title>
+<title>LUNA Producción Audiovisual y Comunicación Estratégica</title>
 
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&display=swap" rel="stylesheet">
@@ -259,6 +259,17 @@ main { padding-top: 90px; }
 }
 .pcard:hover .pc-btn { background: var(--gold); color: var(--black); }
 
+/* ── EFECTO DE RETROALIMENTACIÓN DINÁMICA ── */
+@keyframes goldGlow {
+  0% { border-color: rgba(255, 255, 255, 0.1); box-shadow: 0 0 0 transparent; }
+  30% { border-color: var(--gold); box-shadow: 0 0 20px rgba(201, 168, 76, 0.6); }
+  100% { border-color: rgba(255, 255, 255, 0.1); box-shadow: 0 0 0 transparent; }
+}
+
+.highlight-select {
+  animation: goldGlow 1.8s ease-in-out;
+}
+
 /* ── CARRUSEL DE CLIENTES TRANSPARENTE ── */
 #clientes {
   background: transparent; 
@@ -463,8 +474,8 @@ main { padding-top: 90px; }
   <section class="section" id="confianza">
     <div class="inn">
       <div class="nlbl"><i data-lucide="sparkles"></i>Micromomentos · Señales que conectan</div>
-      <div class="nh1">El mensaje indicado en el momento justo.</div>
-      <p class="ntag">La confianza y la lealtad se forjan en los detalles. Cada pieza que creamos emite las señales precisas para que tu audiencia conecte, confíe y se sienta atraída por tu marca.</p>
+      <div class="nh1">El mensaje indicado en el momento justo</div>
+      <p class="ntag">La confianza y la lealtad se forjan en los detalles. Cada pieza que creamos comunica las señales adecuadas para generar conexión, crear confianza y fortalecer el vínculo con tu marca.</p>
 
       <div class="signals">
         <div class="sig">
@@ -474,27 +485,27 @@ main { padding-top: 90px; }
         </div>
         <div class="sig">
           <div class="sig-ico"><i data-lucide="shield-check"></i></div>
-          <h3>Confianza</h3>
-          <p>Coherencia entre lo que dices y cómo lo muestras. Cada detalle cuidado se traduce en credibilidad y tranquilidad.</p>
+          <h3>Confiar</h3>
+          <p>Coherencia entre lo que dices y cómo lo muestras. Cada detalle diseñado con intención se traduce en credibilidad y tranquilidad.</p>
         </div>
         <div class="sig">
           <div class="sig-ico"><i data-lucide="magnet"></i></div>
           <h3>Atraer</h3>
-          <p>Convertimos la atención en interés real. Las señales acertadas atraen a quienes realmente buscas hacia tu propósito.</p>
+          <p>Convertimos la atención en interés real. Las señales acertadas alinean a tu mercado objetivo con el propósito de tu organización.</p>
         </div>
       </div>
 
       <div class="msg-strip">
         <span class="ms-tag">El factor decisivo</span>
-        <span class="ms-big">El <span class="g">mensaje correcto</span> lo cambia todo.</span>
+        <span class="ms-big">El <span class="g">mensaje correcto</span> lo cambia todo</span>
       </div>
     </div>
   </section>
 
   <section class="section" id="metodo">
     <div class="inn">
-      <div class="nlbl"><i data-lucide="compass"></i>El Método LUNA</div>
-      <div class="nh1">Cinco pasos: crecimiento predecible.</div>
+      <div class="nlbl"><i data-lucide="compass"></i>Nuestra Metodología</div>
+      <div class="nh1">Cinco pasos: crecimiento predecible</div>
       <p class="ntag">No creemos en las fórmulas genéricas. Creamos una conexión genuina entre la autenticidad de tu marca y las necesidades reales de tu mercado.</p>
       
       <div class="timeline">
@@ -516,7 +527,7 @@ main { padding-top: 90px; }
         <div class="tstep" onclick="selectPaso(3)">
           <div class="tstep-dot"></div><span class="tstep-num">04</span>
           <div class="tstep-t"><i data-lucide="rocket"></i>Implementar</div>
-          <div class="tstep-d">Desplegamos campaigns de pauta publicitaria digital.</div>
+          <div class="tstep-d">Desplegamos campañas de pauta publicitaria digital.</div>
         </div>
         <div class="tstep" onclick="selectPaso(4)">
           <div class="tstep-dot"></div><span class="tstep-num">05</span>
@@ -526,7 +537,7 @@ main { padding-top: 90px; }
       </div>
 
       <div id="proc-detail">
-        <p id="proc-detail-txt"><strong>01. Descubrimos tus valores (Branding y Posicionamiento):</strong> Dejamos de lado lo genérico. Mediante auditorías de identidad, extraemos la mística y el propósito real de tu negocio —ya sea la herencia centenaria de una viña o el confort de una infraestructura hotelera— para consolidar un posicionamiento sólido y coherente.</p>
+        <p id="proc-detail-txt"><strong>01. Descubrimos tus valores (Branding y Posicionamiento):</strong> Dejamos de lado lo genérico. Mediante auditorías de identidad, extraemos la esencia y el propósito real de tu negocio —ya sea la herencia centenaria de una viña o el confort de una infraestructura hotelera— para consolidar un posicionamiento sólido y coherente.</p>
       </div>
     </div>
   </section>
@@ -535,7 +546,7 @@ main { padding-top: 90px; }
     <div class="inn">
       <div class="nlbl"><i data-lucide="clapperboard"></i>Portafolio Audiovisual</div>
       <div class="nh1">Nuestra visión en movimiento</div>
-      <p class="ntag">Calidad cinematográfica y storytelling con sello propio. Desde Concepción producimos para marcas e instituciones de todo Chile —cada pieza, pensada para emocionar y conectar.</p>
+      <p class="ntag">Calidad cinematográfica y storytelling con sello propio. Desde Concepción producimos para marcas e instituciones de todo Chile: cada pieza está pensada para emocionar y conectar.</p>
       
       <div class="video-grid">
         <div class="video-wrapper featured">
@@ -561,7 +572,7 @@ main { padding-top: 90px; }
     <div class="inn">
       <div class="nlbl"><i data-lucide="layers"></i>Nuestros Servicios</div>
       <div class="nh1">Productos audiovisuales y Marketing digital</div>
-      <p class="ntag">Cubrimos todas las necesidades de comunicación, producción y desarrollo digital para posicionar tu marca en el mercado.</p>
+      <p class="ntag">Cubrimos todas las necesidades de comunicación, producción audiovisual y posicionamiento estratégico en el mercado.</p>
 
       <div class="pricing-group">
         <div class="pricing-title">Productos audiovisuales</div>
@@ -583,7 +594,7 @@ main { padding-top: 90px; }
       </div>
 
       <div class="pricing-group">
-        <div class="pricing-title">Marketing digital integrado</div>
+        <div class="pricing-title">Marketing digital Integrado</div>
         <div class="services-card">
           <ul class="srv-list">
             <li><i data-lucide="share-2"></i><span>Gestión de Redes Sociales</span></li>
@@ -602,7 +613,7 @@ main { padding-top: 90px; }
     <div class="inn">
       <div class="nlbl"><i data-lucide="wallet"></i>Inversión y Planes</div>
       <div class="nh1">Estructura Modular</div>
-      <p class="ntag">Transformamos ideas en sistemas predecibles. Cuatro formas de trabajar con Luna según lo que tu marca necesita hoy — cada una es un punto de partida que se ajusta a tu proyecto.</p>
+      <p class="ntag">Transformamos ideas en sistemas predecibles. Cuatro formas de trabajar con LCC según lo que tu marca necesita hoy — cada una es un punto de partida que se ajusta a tu proyecto.</p>
 
       <div class="pricing-group">
         <div class="pgrid">
@@ -611,7 +622,7 @@ main { padding-top: 90px; }
             <span class="pc-cat">Una pieza</span>
             <h3 class="pc-name">Esencial</h3>
             <div class="pc-rule"></div>
-            <p class="pc-pitch">1 pieza principal · 2 plataformas · guía de publicación.</p>
+            <p class="pc-pitch">1 pieza principal · Multiformatos · guía de publicación.</p>
             <p class="pc-term">Una pieza de máxima calidad con orientación estratégica.</p>
             <a href="#contacto" class="pc-btn" onclick="selectService('esencial')">Cotiza tu plan</a>
           </div>
@@ -629,7 +640,7 @@ main { padding-top: 90px; }
             <span class="pc-cat">Integral</span>
             <h3 class="pc-name">360°</h3>
             <div class="pc-rule"></div>
-            <p class="pc-pitch">Creamos, publicamos y potenciamos tu marca, con resultados que ves cada mes.</p>
+            <p class="pc-pitch">Estrategia completa · producción continua · pauta e impacto mensual.</p>
             <p class="pc-term">El plan más completo para marcas con objetivos medibles.</p>
             <a href="#contacto" class="pc-btn" onclick="selectService('360')">Agenda diagnóstico</a>
           </div>
@@ -639,7 +650,7 @@ main { padding-top: 90px; }
             <h3 class="pc-name">Broadcast</h3>
             <div class="pc-rule"></div>
             <p class="pc-pitch">Tu evento en vivo y un resumen listo para compartir en menos de 48 horas.</p>
-            <p class="pc-term">Cobertura audiovisual completa, con streaming si aplica.</p>
+            <p class="pc-term">Cobertura audiovisual completa.</p>
             <a href="#contacto" class="pc-btn" onclick="selectService('broadcast')">Cotiza tu plan</a>
           </div>
         </div>
@@ -672,7 +683,7 @@ main { padding-top: 90px; }
     <div class="inn">
       <div class="nlbl"><i data-lucide="send"></i>Contacto</div>
       <div class="nh1">Hablemos de tu proyecto</div>
-      <p class="ntag" style="margin-bottom: 40px;">Déjanos tus datos y un resumen de lo que buscas. Nuestro equipo se pondrá en contacto contigo para agendar una reunión de diagnóstico.</p>
+      <p class="ntag" style="margin-bottom: 40px;">Déjanos tus datos y un resumen de lo que buscas. Nuestro equipo se pondrá en contacto contigo en menos de 24 horas para agendar una reunión de diagnóstico.</p>
       
       <div class="contact-wrapper">
         <div class="contact-form-col">
@@ -788,10 +799,22 @@ document.addEventListener('DOMContentLoaded', () => {
   if (window.lucide) lucide.createIcons();
 });
 
-/* ── INTERACCIONES DE FORMULARIO DE CONTACTO ── */
+/* ── INTERACCIONES DE FORMULARIO DE CONTACTO ENLAZADO ── */
 function selectService(value) {
-  const selector = document.getElementById('service-selector');
-  if(selector) selector.value = value;
+  const selector = document.getElementById('service-selector'); /* */
+  if (selector) {
+    // 1. Asigna el valor del plan seleccionado al elemento <select>
+    selector.value = value; 
+
+    // 2. Remueve la clase por si venía de un clic previo
+    selector.classList.remove('highlight-select'); 
+
+    // 3. Forzar un leve rediseño (reflow) para que el navegador reinicie la animación
+    void selector.offsetWidth; 
+
+    // 4. Aplica la clase de animación para generar el resplandor dorado
+    selector.classList.add('highlight-select'); 
+  }
 }
 
 /* ── ENVÍO ASÍNCRONO DEL FORMULARIO ── */
@@ -835,8 +858,8 @@ function submitContact(e) {
 const PASO_DETAILS = [
   "<strong>01. Descubrimos tus valores (Branding y Posicionamiento):</strong> Dejamos de lado lo genérico. Mediante auditorías de identidad, extraemos la mística y el propósito real de tu negocio —ya sea la herencia centenaria de una viña o el confort de una infraestructura hotelera— para consolidar un posicionamiento sólido y coherente.",
   "<strong>02. Identificamos tu mercado idóneo (Segmentación Estratégica):</strong> Analizamos el mercado local y nacional para encontrar el nicho exacto que conecta, valora y está dispuesto a pagar por tu oferta, definiendo perfiles de cliente ideal y canales prioritarios de abordaje.",
-  "<strong>03. Elaboramos el contenido perfecto (Cápsulas Audiovisuales):</strong> Traducimos tus valores en piezas narrativas de alta gama. Diseñamos y producimos microdocumentales y videos dinámicos optimizados para conversión que hacen sentir la experiencia puertas adentro.",
-  "<strong>04. Implementamos la estrategia (Estrategia Comercial Digital):</strong> Desplegamos campaigns publicitarias de alta precisión (Meta Ads, Google Ads, LinkedIn) configuradas para romper la estacionalidad, automatizar la captura de prospectos y generar reservas directas.",
+  "<strong>03. Elaboramos el contenido perfecto (Narrativa Audiovisual Estratégica):</strong> Traducimos tus valores en piezas narrativas de alta gama. Diseñamos y producimos videos dinámicos, optimizados para conversión que hacen sentir la experiencia puertas adentro.",
+  "<strong>04. Implementamos la estrategia (Estrategia Comercial Digital):</strong> Desplegamos campañas publicitarias de alta precisión (Meta Ads, Google Ads, LinkedIn) configuradas para romper la estacionalidad, automatizar la captura de prospectos y generar reservas directas.",
   "<strong>05. Medimos, optimizamos y fidelizamos (Retorno e Impacto):</strong> Lo que no se mide, no evoluciona. Monitoreamos sistemáticamente el rendimiento a través de KPIs clave, optimizando la inversión para maximizar el retorno y construir relaciones comerciales a largo plazo."
 ];
 
