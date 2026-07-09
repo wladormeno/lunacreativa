@@ -4,12 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>LUNA Comunicación Creativa</title>
+<meta name="description" content="Producción audiovisual y marketing digital en Chile. Video de destinos, enoturismo, pauta segmentada, video inductivo, capacitación SSO, procedimientos, video corporativo e institucional y streaming de eventos.">
 
 <link rel="icon" href="luna_icon.png" sizes="any">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&display=swap" rel="stylesheet">
 
 <style>
-/* ── VARIABLES & RESET ── */
+/* ── VARIABLES & RESET GLOBAL ── */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 :root {
   --gold: #c9a84c; 
@@ -26,8 +27,13 @@ body {
   overflow-x: hidden;
 }
 .lucide { stroke-width: 1.6; width: 20px; height: 20px; display: inline-block; vertical-align: middle; flex: none; }
+a { text-decoration: none; }
 
-/* ── HEADER & NAV CORREGIDO ── */
+/* ── CONTROLADOR DE VISTAS (SPA) ── */
+.page-view { display: none; }
+.page-view.active { display: block; }
+
+/* ── HEADER Y NAVEGACIÓN COMPARTIDA ── */
 header {
   position: fixed; top: 0; left: 0; right: 0; z-index: 600;
   display: flex; justify-content: space-between; align-items: center;
@@ -35,7 +41,7 @@ header {
   background: rgba(7,7,7,0.9); 
   border-bottom: 1px solid rgba(201,168,76,0.2); backdrop-filter: blur(12px);
 }
-.header-container {
+.header-container, .hc {
   width: 100%; max-width: 1400px; margin: 0 auto;
   display: flex; justify-content: space-between; align-items: center;
 }
@@ -44,7 +50,7 @@ header {
 }
 .brand-icon { height: 50px; width: auto; display: block; image-rendering: auto; }
 
-/* ── LOGO LUNA ANIMADA ── */
+/* ANIMACIÓN LOGO LUNA */
 .shutter { position: relative; width: 50px; height: 50px; flex: none; display: flex; align-items: center; justify-content: center; }
 .shutter svg { width: 100%; height: 100%; display: block; }
 .moon-anim {
@@ -78,41 +84,29 @@ nav a {
   letter-spacing: 1.8px; text-transform: uppercase; font-weight: 600;
   padding: 6px 2px; transition: color 0.3s;
 }
-nav a:shadow(none)::after {
+#view-home nav a:not(.nav-cta)::after {
   content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 2px;
   background: var(--gold); transform: scaleX(0); transform-origin: left;
   transition: transform 0.3s ease;
 }
-nav a:not(.nav-cta)::after {
-  content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 2px;
-  background: var(--gold); transform: scaleX(0); transform-origin: left;
-  transition: transform 0.3s ease;
-}
-nav a:not(.nav-cta):hover { color: var(--gold); }
-nav a:not(.nav-cta):hover::after { transform: scaleX(1); }
-nav a.nav-cta {
+#view-home nav a:not(.nav-cta):hover { color: var(--gold); }
+#view-home nav a:not(.nav-cta):hover::after { transform: scaleX(1); }
+nav a.nav-cta, nav a.cta {
   color: var(--black); background: var(--gold); border: 1px solid var(--gold); border-radius: 100px;
   padding: 10px 22px; letter-spacing: 1.5px; overflow: hidden;
-  transition: box-shadow 0.3s, transform 0.3s;
+  transition: box-shadow 0.3s, transform 0.3s, background 0.25s, color 0.25s;
 }
-nav a.nav-cta:hover { color: var(--black); box-shadow: 0 8px 24px rgba(201,168,76,0.4); transform: translateY(-2px); }
-nav a.nav-btn {
-  display: inline-flex; align-items: center; gap: 8px; font-size: 13px; letter-spacing: 1.5px;
-  color: var(--gold); border: 1px solid rgba(201,168,76,0.5); border-radius: 100px; padding: 9px 18px;
-  transition: background 0.25s, color 0.25s;
-}
-nav a.nav-btn:hover { background: var(--gold); color: var(--black); }
-nav a.nav-btn .lucide { width: 15px; height: 15px; }
+nav a.nav-cta:hover, nav a.cta:hover { color: var(--black); box-shadow: 0 8px 24px rgba(201,168,76,0.4); transform: translateY(-2px); }
+nav a.back { color: rgba(255,255,255,0.6); display: inline-flex; align-items: center; gap: 7px; cursor: pointer; }
+nav a.back .lucide { width: 15px; height: 15px; }
 
-/* ── LAYOUT SECCIONES ── */
+/* ── ELEMENTOS ESTRUCTURALES DEL HOME ── */
 main { padding-top: 90px; }
 .section {
   width: 100%; padding: 100px 20px;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
-  border-bottom: none; 
   background: var(--black); 
 }
-.section:nth-child(even) { background: var(--black); } 
 .inn { width: 100%; max-width: 900px; position: relative; margin: 0 auto; }
 .nlbl {
   font-size: 20px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold);
@@ -123,7 +117,7 @@ main { padding-top: 90px; }
 .nh1 { font-family: 'Montserrat', sans-serif; font-size: 42px; font-weight: 700; line-height: 1.1; margin-bottom: 12px; color: var(--white); }
 .ntag { font-size: 20px; color: rgba(255,255,255,0.6); margin-bottom: 24px; font-weight: 300; line-height: 1.6; }
 
-/* ── HERO SLIDER ── */
+/* HERO SLIDER HOME */
 #hero {
   position: relative; width: 100%; height: calc(100vh - 90px);
   display: flex; align-items: center; justify-content: center;
@@ -168,7 +162,7 @@ main { padding-top: 90px; }
 .slide-text .g { color: var(--gold); }
 .slide-line { width: 130px; height: 2px; background: var(--gold); margin: 30px auto 0; }
 
-/* ── MÉTODO LUNA ── */
+/* MÉTODO LUNA TIMELINE */
 .timeline { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 24px; position: relative; }
 .timeline::before { content: ''; position: absolute; top: 26px; left: 0; right: 0; height: 1px; background: rgba(201,168,76,0.2); }
 .tstep { flex: 1; min-width: 140px; position: relative; cursor: pointer; padding-top: 60px; }
@@ -185,26 +179,19 @@ main { padding-top: 90px; }
 .tstep-t .lucide { width: 18px; height: 18px; color: var(--gold); flex: none; }
 .tstep:hover .tstep-t, .tstep.active .tstep-t { color: var(--gold); }
 .tstep-d { font-size: 18px; color: rgba(255,255,255,0.5); line-height: 1.5; }
-#proc-detail {
-  margin-top: 30px; padding: 20px 24px; background: rgba(255,255,255,0.03);
-  border-left: 2px solid var(--gold); min-height: 50px; transition: opacity 0.3s;
-}
-#proc-detail p { font-size: 18px; color: rgba(255,255,255,0.7); line-height: 1.7; }
 
-/* ── VIDEO SHOWREEL ── */
+/* REEL / VIDEO COMPARTIDO */
 .video-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; width: 100%; margin-top: 30px; }
 .video-wrapper {
   position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; width: 100%;
   border: 1px solid rgba(201,168,76,0.2); border-radius: 8px; background: #000;
   transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
 .video-wrapper:hover { transform: translateY(-5px); border-color: rgba(201,168,76,0.55); box-shadow: 0 18px 44px rgba(0,0,0,0.6); }
 .video-wrapper.featured { grid-column: 1 / -1; }
-@media (max-width: 760px) { .video-grid { grid-template-columns: 1fr; } }
 .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
 
-/* ── TARJETA DE SERVICIOS ── */
+/* TARJETAS DE SERVICIO & SOLUCIONES */
 .services-card {
   background: rgba(255,255,255,0.02); border: 1px solid rgba(201,168,76,0.15);
   border-radius: 8px; padding: 40px; margin-top: 30px; position: relative;
@@ -212,15 +199,11 @@ main { padding-top: 90px; }
 }
 .services-card:hover { border-color: rgba(201,168,76,0.4); }
 .services-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--gold); }
-.srv-list {
-  list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;
-}
-.srv-list li {
-  font-size: 18px; color: rgba(255,255,255,0.8); display: flex; align-items: flex-start; gap: 14px; line-height: 1.5;
-}
+.srv-list { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
+.srv-list li { font-size: 18px; color: rgba(255,255,255,0.8); display: flex; align-items: flex-start; gap: 14px; line-height: 1.5; }
 .srv-list li .lucide { width: 22px; height: 22px; color: var(--gold); flex: none; margin-top: 1px; }
 
-/* ── MICROMOMENTOS / CONFIANZA ── */
+/* MICROMOMENTOS / SEÑALES */
 .signals { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 8px; }
 .sig {
   position: relative; background: rgba(201,168,76,0.05); border: 1px solid rgba(201,168,76,0.28);
@@ -241,16 +224,14 @@ main { padding-top: 90px; }
 .msg-strip .ms-tag { font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--gray); }
 .msg-strip .ms-big { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: clamp(22px, 3vw, 36px); letter-spacing: -0.3px; }
 .msg-strip .ms-big .g { color: var(--gold); }
-@media (max-width: 820px) { .signals { grid-template-columns: 1fr; } }
 
-/* ── SOLUCIONES ── */
+/* GRILLA SOLUCIONES VERTICALES */
 .sol-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-top: 10px; }
 .sol-card {
   position: relative; overflow: hidden; border: 1px solid rgba(201,168,76,0.3); border-radius: 16px;
   padding: 44px 40px; min-height: 320px; display: flex; flex-direction: column; text-decoration: none;
-  background: rgba(201,168,76,0.04); transition: transform .35s, border-color .35s, box-shadow .35s;
+  background: rgba(201,168,76,0.04); transition: transform .35s, border-color .35s, box-shadow .35s; cursor: pointer;
 }
-.sol-card wilderness { position: relative; z-index: 0; }
 .sol-card::after {
   content: ''; position: absolute; inset: 0; border-radius: 16px; pointer-events: none; z-index: 0;
   background: radial-gradient(130% 80% at 50% -12%, rgba(201,168,76,0.18), transparent 55%);
@@ -267,22 +248,12 @@ main { padding-top: 90px; }
 .sol-go { margin-top: auto; display: inline-flex; align-items: center; gap: 10px; color: var(--gold); font-weight: 700; font-size: 14px; letter-spacing: 1px; text-transform: uppercase; }
 .sol-go .lucide { width: 18px; height: 18px; transition: transform .25s; }
 .sol-card:hover .sol-go .lucide { transform: translateX(5px); }
-@media (max-width: 760px) { .sol-grid { grid-template-columns: 1fr; } }
 
-/* ── FILTROS PORTAFOLIO ── */
-.reel-filters { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 4px; margin-bottom: 8px; }
-.reel-chip { font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,0.7); background: transparent; border: 1px solid rgba(201,168,76,0.3); border-radius: 100px; padding: 9px 18px; cursor: pointer; transition: all .25s; }
-.reel-chip:hover { border-color: rgba(201,168,76,0.6); color: var(--white); }
-.reel-chip.active { background: var(--gold); color: var(--black); border-color: var(--gold); }
-.video-wrapper.hide { display: none; }
-
-/* ── NOTA PLANES ── */
+/* ESTRUCTURA PLANES Y PRECIOS MODULARES */
 .plan-note { margin-top: 8px; display: flex; align-items: flex-start; gap: 14px; background: rgba(201,168,76,0.06); border: 1px solid rgba(201,168,76,0.25); border-radius: 12px; padding: 22px 26px; }
 .plan-note .lucide { width: 22px; height: 22px; color: var(--gold); flex: none; margin-top: 2px; }
 .plan-note p { font-size: 15.5px; line-height: 1.65; color: rgba(255,255,255,0.8); }
 .plan-note b { color: var(--gold); font-weight: 700; }
-
-/* ── PRECIOS MODULARES ── */
 .pricing-group { margin-top: 48px; margin-bottom: 64px; }
 .pricing-title {
   font-family: 'Montserrat', sans-serif; font-size: 19px; font-weight: 700; letter-spacing: 0.5px; color: var(--gold);
@@ -300,14 +271,9 @@ main { padding-top: 90px; }
 .pcard > * { position: relative; z-index: 1; }
 .pcard::after {
   content: ''; position: absolute; inset: 0; border-radius: 12px; pointer-events: none; z-index: 0;
-  background:
-    radial-gradient(135% 80% at 50% -12%, rgba(201,168,76,0.22), transparent 55%),
-    radial-gradient(100% 100% at 50% 50%, transparent 40%, rgba(0,0,0,0.6) 100%);
+  background: radial-gradient(135% 80% at 50% -12%, rgba(201,168,76,0.22), transparent 55%), radial-gradient(100% 100% at 50% 50%, transparent 40%, rgba(0,0,0,0.6) 100%);
 }
-.pcard::before {
-  content: '✦'; position: absolute; top: 22px; right: 26px; color: rgba(201,168,76,0.6);
-  font-size: 16px; z-index: 2;
-}
+.pcard::before { content: '✦'; position: absolute; top: 22px; right: 26px; color: rgba(201,168,76,0.6); font-size: 16px; z-index: 2; }
 .pcard:hover { transform: translateY(-6px); border-color: rgba(201,168,76,0.65); box-shadow: 0 18px 42px rgba(0,0,0,0.5); }
 .pc-ico { color: var(--gold); margin-bottom: 18px; }
 .pc-ico .lucide { width: 34px; height: 34px; }
@@ -315,94 +281,132 @@ main { padding-top: 90px; }
 .pc-name { font-family: 'Montserrat', sans-serif; font-size: 28px; font-weight: 700; line-height: 1.1; color: var(--white); margin-top: 12px; }
 .pc-rule { width: 46px; height: 2px; background: var(--gold); opacity: 0.85; margin: 22px 0 20px; }
 .pc-pitch { font-family: 'Montserrat', sans-serif; font-size: 16px; font-weight: 500; color: rgba(255,255,255,0.9); line-height: 1.5; margin-bottom: 14px; }
-.pc-pitch .muted { color: rgba(255,255,255,0.45); }
-.pc-pitch .hl { color: var(--gold); font-weight: 700; }
-.growth-path {
-  display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 18px;
-  margin: 4px 0 56px; padding: 20px 24px;
-  border-top: 0.5px solid rgba(201,168,76,0.22); border-bottom: 0.5px solid rgba(201,168,76,0.22);
-}
-.gp-step { font-family: 'Montserrat', sans-serif; font-size: 14px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,0.85); display: flex; align-items: center; gap: 10px; }
-.gp-step .gp-tag { color: var(--gold); font-weight: 700; }
-.growth-path .lucide { width: 24px; height: 24px; color: var(--gold); }
 .pc-term { font-family: 'Montserrat', sans-serif; font-style: italic; font-size: 15px; font-weight: 400; color: rgba(255,255,255,0.55); line-height: 1.5; }
 .pc-btn {
   margin-top: auto; text-align: center; padding: 15px; border: 1px solid var(--gold); border-radius: 4px;
   color: var(--gold); font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 700;
-  text-transform: uppercase; letter-spacing: 2px; transition: background 0.3s, color 0.3s; text-decoration: none; cursor: pointer;
+  text-transform: uppercase; letter-spacing: 2px; transition: background 0.3s, color 0.3s; cursor: pointer;
 }
-pcard:hover .pc-btn { background: var(--gold); color: var(--black); }
+.pcard:hover .pc-btn { background: var(--gold); color: var(--black); }
 
-/* ── CARRUSEL DE CLIENTES TRANSPARENTE ── */
-#clientes {
-  background: transparent; 
-  padding: 10px 0;
-  border-top: none; 
-  border-bottom: none; 
-  overflow: hidden; 
-  width: 100%; 
-  display: flex;
-  margin-top: 0; 
-  margin-bottom: 60px; 
-}
-.carousel-track {
-  display: flex; align-items: center; gap: 0; width: max-content;
-  animation: scroll 35s linear infinite;
-}
+/* CAROUSEL INFINITO DE CLIENTES */
+#clientes { background: transparent; padding: 10px 0; border: none; overflow: hidden; width: 100%; display: flex; margin-bottom: 60px; }
+.carousel-track { display: flex; align-items: center; gap: 80px; width: max-content; animation: scroll 35s linear infinite; }
 .carousel-track:hover { animation-play-state: paused; }
-.logo-c {
-  height: 84px; width: 150px; max-width: 150px; object-fit: contain; display: block; margin-right: 70px; flex: none;
-  filter: grayscale(100%) opacity(0.4); transition: filter 0.4s ease, opacity 0.4s ease;
-}
-.logo-c:hover { filter: grayscale(0%) opacity(1); }
+.logo-c { height: 84px; width: 150px; max-width: 150px; object-fit: contain; display: block; margin-right: 70px; flex: none; opacity: 0.85; transition: opacity 0.4s ease; }
+.logo-c:hover { opacity: 1; }
 .logo-c.logo-wide { width: 108px; }
 .logo-c.logo-narrow { transform: scale(1.55); }
-@keyframes scroll {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
+@keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-/* ── CONTACTO Y FORMULARIO ── */
-#tarifas { padding-bottom: 0; }
-#contacto {
-  padding-top: 0;
-  scroll-margin-top: 90px; /* Margen de compensación para que no sea tapado por el header */
-}
+/* FORMULARIOS DE CONTACTO COMPARTIDOS */
 .contact-wrapper { display: flex; flex-direction: column; gap: 24px; width: 100%; }
 .contact-info-col p { font-size: 18px; color: rgba(255,255,255,0.6); line-height: 1.8; text-align: center; }
 .contact-info-col p .lucide { width: 18px; height: 18px; color: var(--gold); vertical-align: -3px; margin-right: 6px; }
 .social-row { display: flex; justify-content: center; gap: 18px; margin-top: 26px; }
 .social-row a {
-  display: flex; align-items: center; justify-content: center;
-  width: 48px; height: 48px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 50%;
   border: 2.5px solid rgba(201,168,76,0.55); color: rgba(255,255,255,0.85);
   transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
 }
 .social-row a:hover { background: var(--gold); color: #070707; border-color: var(--gold); transform: translateY(-3px); }
-.social-row a .lucide, .social-row a svg { width: 22px; height: 22px; }
+.social-row a svg { width: 22px; height: 22px; fill: currentColor; }
 .contact-form {
   background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.1); 
-  border-radius: 8px; padding: 40px; display: flex; flex-direction: column; gap: 18px; width: 100%;
+  border-radius: 8px; padding: 40px; display: flex; flex-direction: column; gap: 18px; width: 100%; max-width: 640px; margin: 0 auto;
 }
 .c-field { display: flex; flex-direction: column; gap: 6px; }
 .c-label { font-size: 14px; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
 .c-input, .c-select, .c-textarea {
   background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 4px; padding: 14px; color: var(--white);
-  font-family: 'Montserrat', sans-serif; font-size: 14px; outline: none; transition: border-color 0.2s;
+  border-radius: 4px; padding: 14px; color: var(--white); font-family: 'Montserrat', sans-serif; font-size: 14px; outline: none; transition: border-color 0.2s;
 }
 .c-select option { background: var(--black); color: var(--white); }
 .c-input:focus, .c-select:focus, .c-textarea:focus { border-color: var(--gold); }
 .c-textarea { resize: vertical; min-height: 120px; }
 .c-submit {
   background: var(--gold); color: var(--black); border: none; border-radius: 4px;
-  padding: 14px; font-size: 12px; font-weight: 600; text-transform: uppercase;
-  letter-spacing: 1px; cursor: pointer; margin-top: 10px; transition: filter 0.2s; font-family: 'Montserrat', sans-serif;
+  padding: 16px; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 14px;
+  letter-spacing: 1px; text-transform: uppercase; cursor: pointer; transition: opacity 0.2s; margin-top: 10px;
 }
-.c-submit:hover { filter: brightness(1.15); }
-.c-submit:disabled { background: var(--gray); cursor: not-allowed; }
+.c-submit:hover { opacity: 0.85; }
 
-/* ── TOAST ── */
+/* ── ESTILOS EXCLUSIVOS VERTICALES (INDUSTRIA Y TURISMO) ── */
+.sec { padding: clamp(80px, 11vh, 130px) 40px; }
+.wrap { max-width: 1400px; margin: 0 auto; }
+.shead { max-width: 800px; margin-bottom: 54px; }
+.snum { font-size: 13px; letter-spacing: 3px; color: var(--gold); text-transform: uppercase; font-weight: 700; display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+.snum .ln { width: 40px; height: 1px; background: rgba(201,168,76,0.6); }
+.stitle { font-size: clamp(30px, 4.4vw, 54px); font-weight: 800; line-height: 1.05; letter-spacing: -0.8px; text-transform: uppercase; }
+.stitle .g { color: var(--gold); }
+.sdesc { margin-top: 20px; font-size: 17px; line-height: 1.7; color: rgba(255,255,255,0.68); max-width: 660px; }
+.sec.alt { background: #0c0c0d; }
+
+/* LHERO INTERNAS */
+.lhero { position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 130px 40px 80px; overflow: hidden; }
+.lhero::before { content: ''; position: absolute; inset: 0; z-index: 0; background: radial-gradient(120% 90% at 70% 20%, rgba(201,168,76,0.12), transparent 55%), radial-gradient(90% 90% at 50% 50%, transparent 55%, rgba(0,0,0,0.9)); }
+.lhero-mark { position: absolute; left: 50%; top: 52%; transform: translate(-50%,-50%); width: min(78vh, 780px); max-height: 88vh; opacity: 0.07; z-index: 0; pointer-events: none; }
+.lhero-inner { position: relative; z-index: 2; width: 100%; max-width: 1000px; margin: 0 auto; }
+.vbadge { display: inline-flex; align-items: center; gap: 10px; font-size: 12px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); font-weight: 700; border: 1px solid rgba(201,168,76,0.4); border-radius: 100px; padding: 8px 16px; margin-bottom: 30px; }
+.vbadge .lucide { width: 15px; height: 15px; }
+.lhero h1 { font-size: clamp(40px, 6.5vw, 88px); font-weight: 800; line-height: 1.02; letter-spacing: -1.5px; text-transform: uppercase; max-width: 18ch; margin: 0 auto; }
+.lhero h1 .g { color: var(--gold); }
+.lhero .lead { margin: 30px auto 0; max-width: 640px; font-size: clamp(16px, 1.6vw, 20px); line-height: 1.6; color: rgba(255,255,255,0.72); font-weight: 300; }
+.lhero-actions { margin-top: 40px; display: flex; gap: 22px; align-items: center; justify-content: center; flex-wrap: wrap; }
+
+.btn-primary { display: inline-flex; align-items: center; gap: 12px; background: var(--gold); color: var(--black); font-weight: 700; font-size: 14px; letter-spacing: 0.5px; padding: 17px 30px; border-radius: 100px; transition: transform .25s, box-shadow .25s; }
+.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 16px 40px rgba(201,168,76,0.3); }
+.btn-primary .lucide { width: 18px; height: 18px; }
+.btn-ghost { display: inline-flex; align-items: center; gap: 10px; color: var(--white); font-weight: 600; font-size: 14px; opacity: 0.8; transition: opacity .2s, gap .2s; }
+.btn-ghost:hover { opacity: 1; gap: 14px; color: var(--gold); }
+.btn-ghost .lucide { width: 18px; height: 18px; }
+
+/* GRILLAS DE ARGUMENTOS, DOLORES Y BOTONES */
+.arg-grid, .pain-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+.arg, .pain { border: 1px solid rgba(201,168,76,0.22); border-radius: 14px; padding: 34px 30px; background: rgba(201,168,76,0.03); transition: transform .3s, border-color .3s; }
+.arg:hover, .pain:hover { transform: translateY(-5px); border-color: rgba(201,168,76,0.55); }
+.arg-ico, .pain-ico { width: 54px; height: 54px; border-radius: 50%; border: 1px solid rgba(201,168,76,0.4); display: flex; align-items: center; justify-content: center; color: var(--gold); margin-bottom: 22px; }
+.arg-ico .lucide, .pain-ico .lucide { width: 25px; height: 25px; }
+.arg h3, .pain h3 { font-size: 20px; font-weight: 700; margin-bottom: 10px; }
+.arg p, .pain p { font-size: 15px; line-height: 1.6; color: rgba(255,255,255,0.66); }
+
+.svc-list { list-style: none; display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+.svc-list li { display: flex; align-items: flex-start; gap: 16px; padding: 24px 26px; border: 1px solid rgba(201,168,76,0.18); border-radius: 12px; background: rgba(255,255,255,0.02); transition: border-color .3s, background .3s; }
+.svc-list li:hover { border-color: rgba(201,168,76,0.5); background: rgba(201,168,76,0.05); }
+.svc-list .ico { width: 44px; height: 44px; border-radius: 10px; background: rgba(201,168,76,0.1); display: flex; align-items: center; justify-content: center; color: var(--gold); flex: none; }
+.svc-list .ico .lucide { width: 22px; height: 22px; }
+.svc-list h4 { font-size: 17px; font-weight: 700; margin-bottom: 5px; }
+.svc-list p { font-size: 14px; line-height: 1.55; color: rgba(255,255,255,0.62); }
+
+/* CAROUSEL INTERNAS MASKING */
+.ev-carousel-wrap {
+  overflow: hidden; width: 100%; margin-top: 10px;
+  -webkit-mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+  mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+}
+.ev-carousel-track { display: flex; align-items: center; width: max-content; animation: ev-scroll 30s linear infinite; }
+.ev-carousel-track:hover { animation-play-state: paused; }
+.ev-carousel-track .logo-c { height: 84px; width: 150px; max-width: 150px; object-fit: contain; display: block; margin-right: 70px; flex: none; opacity: 0.85; transition: opacity 0.4s ease; }
+@keyframes ev-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+.cta-band { background: var(--gold); color: var(--black); padding: clamp(70px, 10vh, 110px) 40px; text-align: center; }
+.cta-band h2 { font-size: clamp(28px, 4.5vw, 56px); font-weight: 800; line-height: 1.05; letter-spacing: -1px; text-transform: uppercase; max-width: 18ch; margin: 0 auto; }
+.cta-band p { margin: 22px auto 34px; max-width: 580px; font-size: 17px; line-height: 1.6; font-weight: 500; opacity: 0.85; }
+.cta-band .btn-dark { display: inline-flex; align-items: center; gap: 12px; background: var(--black); color: var(--white); font-weight: 700; font-size: 15px; padding: 18px 34px; border-radius: 100px; transition: transform .25s; }
+.cta-band .btn-dark:hover { transform: translateY(-3px); }
+.cta-band .btn-dark .lucide { width: 18px; height: 18px; }
+
+footer { padding: 54px 40px; border-top: 1px solid rgba(201,168,76,0.15); background: var(--black); }
+.foot { max-width: 1400px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 26px; flex-wrap: wrap; }
+.foot-l { display: flex; align-items: center; gap: 14px; }
+.foot-l img { height: 40px; }
+.foot-l span { font-size: 12px; letter-spacing: 1px; color: var(--gray); line-height: 1.7; }
+.foot-l b { color: var(--gold); font-weight: 600; }
+.foot-nav { display: flex; gap: 22px; flex-wrap: wrap; }
+.foot-nav a { font-size: 13px; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,0.6); font-weight: 600; cursor: pointer; }
+.foot-nav a:hover { color: var(--gold); }
+
+/* TOAST NOTIFICACIONES */
 #toast {
   position: fixed; top: 100px; left: 50%; transform: translateX(-50%) translateY(-64px);
   background: rgba(201,168,76,0.9); border: 0.5px solid var(--gold);
@@ -410,24 +414,25 @@ pcard:hover .pc-btn { background: var(--gold); color: var(--black); }
   z-index: 900; transition: transform 0.4s ease, opacity 0.4s ease; pointer-events: none; letter-spacing: 1px; opacity: 0;
 }
 #toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
-#toast.error { background: #ea4335; border-color: #ea4335; color: var(--white); }
 
-@media (max-width: 768px) {
+/* REEDICIÓN RESPONSIVE */
+@media (max-width: 900px) {
   header { padding: 15px 20px; }
-  .header-container { flex-direction: column; gap: 15px; }
+  .header-container, .hc { flex-direction: column; gap: 15px; }
+  nav ul { gap: 15px; flex-wrap: wrap; justify-content: center; }
   .timeline::before { display: none; }
   .tstep { padding-top: 0; padding-left: 36px; margin-bottom: 20px; }
   .tstep-dot { top: 2px; left: 0; }
   .tstep-num { top: 3px; left: 30px; }
   .contact-form { padding: 24px; }
-  #clientes { margin-top: 0; }
-  #contacto {
-    scroll-margin-top: 155px; /* Margen adaptado al menú colapsado vertical en móviles */
-  }
+  .svc-list { grid-template-columns: 1fr; }
+  .video-grid { grid-template-columns: 1fr; }
+  #contacto { scroll-margin-top: 155px; }
 }
 </style>
 </head>
 <body>
+
 <svg style="display:none" aria-hidden="true">
 <defs>
 <symbol id="icon-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/></symbol>
@@ -473,441 +478,876 @@ pcard:hover .pc-btn { background: var(--gold); color: var(--black); }
 </defs>
 </svg>
 
-<template id="__bundler_thumbnail" data-bg-color="#070707">
-  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
-    <rect width="1200" height="800" fill="#070707"/>
-    <path d="M660 250 a150 150 0 1 0 0 300 a115 115 0 1 1 0 -300 z" fill="#c9a84c"/>
-    <text x="600" y="640" font-family="Montserrat, sans-serif" font-size="90" font-weight="700" fill="#ffffff" text-anchor="middle" letter-spacing="18">LUNA</text>
-  </svg>
-</template>
+<div id="toast">Mensaje enviado con éxito</div>
 
-<header>
-  <div class="header-container">
-    <div class="logo-container">
-      <a href="#">
-        <span class="shutter" role="img" aria-label="LUNA">
-          <img src="luna_icon.png" alt="" class="brand-icon moon-anim">
-        </span>
-        <span class="brand-text">
-          <span class="brand-name">LUNA</span>
-          <span class="brand-tag">Comunicación <span class="creativa">Creativa</span></span>
-        </span>
-      </a>
-    </div>
-    <nav>
-      <ul>
-        <li><a href="#confianza">Identidad</a></li>
-        <li><a href="#soluciones">Soluciones</a></li>
-        <li><a href="#metodo">Método</a></li>
-        <li><a href="#showreel">Portafolio</a></li>
-        <li><a href="#servicios">Servicios</a></li>
-        <li><a href="#tarifas">Planes</a></li>
-        <li><a class="nav-cta" href="#contacto">Contacto</a></li>
-      </ul>
-    </nav>
-  </div>
-</header>
-
-<main>
-  <section id="hero">
-    <img src="luna_icon.png" alt="" class="hero-mark">
-    <div class="slide active">
-      <div class="slide-bg"></div>
-      <div class="slide-content">
-        <div class="slide-kicker">Estrategia</div>
-        <h2 class="slide-text">Comprendemos tu <span class="g">Esencia</span></h2>
-        <div class="slide-line"></div>
-      </div>
-    </div>
-    <div class="slide">
-      <div class="slide-bg"></div>
-      <div class="slide-content">
-        <div class="slide-kicker">Producción</div>
-        <h2 class="slide-text">Potenciamos tu <span class="g">Mensaje</span></h2>
-        <div class="slide-line"></div>
-      </div>
-    </div>
-    <div class="slide">
-      <div class="slide-bg"></div>
-      <div class="slide-content">
-        <div class="slide-kicker">Difusión</div>
-        <h2 class="slide-text">Conectamos con tu <span class="g">Audiencia</span></h2>
-        <div class="slide-line"></div>
-      </div>
-    </div>
-    <div class="slide">
-      <div class="slide-bg"></div>
-      <div class="slide-content">
-        <div class="slide-kicker">Resultados</div>
-        <h2 class="slide-text">Multiplicamos tu <span class="g">Valor</span></h2>
-        <div class="slide-line"></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="confianza">
-    <div class="inn">
-      <div class="nlbl"><svg class="lucide"><use href="#icon-spark"></use></svg>Micromomentos · Cada detalle comunica</div>
-      <div class="nh1">El mensaje indicado,<br>en el momento justo.</div>
-      <p class="ntag">Ya sea un destino que busca viajeros o una empresa que necesita inducir con rigor, la confianza se construye en pequeños instantes. Cada pieza que creamos emite las señales oportunas para fortalecer tu identidad, ganar la confianza de tu audiencia y convertir.</p>
-
-      <div class="signals">
-        <div class="sig">
-          <div class="sig-ico"><svg class="lucide"><use href="#icon-eye"></use></svg></div>
-          <h3>Posicionar</h3>
-          <p>En LUNA damos forma a tu identidad audiovisual: un destino que se vuelve deseable, una empresa que proyecta prestigio y solidez.</p>
-        </div>
-        <div class="sig">
-          <div class="sig-ico"><svg class="lucide"><use href="#icon-shield"></use></svg></div>
-          <h3>Confiar</h3>
-          <p>Un destino confiable llena reservas; una empresa coherente cumple y protege. Cada detalle cuidado se traduce en credibilidad.</p>
-        </div>
-        <div class="sig">
-          <div class="sig-ico"><svg class="lucide"><use href="#icon-trend"></use></svg></div>
-          <h3>Convertir</h3>
-          <p>Traducimos la atención en resultados medibles: reservas para el viajero correcto, compromiso del equipo adecuado. Comunicación con retorno.</p>
-        </div>
-      </div>
-
-      <div class="msg-strip">
-        <span class="ms-tag">El factor decisivo</span>
-        <span class="ms-big">El <span class="g">mensaje correcto</span> lo cambia todo.</span>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="soluciones">
-    <div class="inn">
-      <div class="nlbl"><svg class="lucide"><use href="#icon-door"></use></svg>Soluciones · Para quién lo hacemos</div>
-      <div class="nh1">Dos puertas de entrada,<br>una misma maestría.</div>
-      <p class="ntag">Mismo método, misma calidad cinematográfica. Descubre la línea que resuelve tus desafíos y cómo potenciamos tus objetivos.</p>
-
-      <div class="sol-grid">
-        <a class="sol-card" href="turismo.html">
-          <div class="sol-ico"><svg class="lucide"><use href="#icon-mountain"></use></svg></div>
-          <h3>Turismo y Hospitalidad</h3>
-          <p>Rompe la estacionalidad y llena tus temporadas. Contenido que inspira viajes y convierte audiencias en reservas.</p>
-          <div class="sol-tags">
-            <span class="sol-tag">Destinos</span>
-            <span class="sol-tag">Reservas directas</span>
-            <span class="sol-tag">Pauta segmentada</span>
-            <span class="sol-tag">Subtitulado internacional</span>
-          </div>
-          <span class="sol-go">Ver soluciones de turismo <svg class="lucide"><use href="#icon-arrow-right"></use></svg></span>
-        </a>
-        <a class="sol-card" href="industria.html">
-          <div class="sol-ico"><svg class="lucide"><use href="#icon-hardhat"></use></svg></div>
-          <h3>Industria y Empresas</h3>
-          <p>Producciones audiovisuales para el cumplimiento normativo y la reducción de accidentabilidad. Trazable, estandarizada y profesional.</p>
-          <div class="sol-tags">
-            <span class="sol-tag">Video corporativo</span>
-            <span class="sol-tag">Inducciones y SSO</span>
-            <span class="sol-tag">Capacitación</span>
-            <span class="sol-tag">Streaming corporativo</span>
-            <span class="sol-tag">Realidad mixta</span>
-          </div>
-          <span class="sol-go">Ver soluciones de industria <svg class="lucide"><use href="#icon-arrow-right"></use></svg></span>
+<div id="view-home" class="page-view active">
+  <header>
+    <div class="header-container">
+      <div class="logo-container">
+        <a href="#">
+          <span class="shutter" role="img" aria-label="LUNA">
+            <img src="luna_icon.png" alt="" class="brand-icon moon-anim">
+          </span>
+          <span class="brand-text">
+            <span class="brand-name">LUNA</span>
+            <span class="brand-tag">Comunicación <span class="creativa">Creativa</span></span>
+          </span>
         </a>
       </div>
+      <nav>
+        <ul>
+          <li><a href="#confianza">Identidad</a></li>
+          <li><a href="#soluciones">Soluciones</a></li>
+          <li><a href="#metodo">Método</a></li>
+          <li><a href="#showreel">Portafolio</a></li>
+          <li><a href="#servicios">Servicios</a></li>
+          <li><a href="#tarifas">Planes</a></li>
+          <li><a class="nav-cta" href="#contacto">Contacto</a></li>
+        </ul>
+      </nav>
     </div>
-  </section>
+  </header>
 
-  <section class="section" id="metodo">
-    <div class="inn">
-      <div class="nlbl"><svg class="lucide"><use href="#icon-compass"></use></svg>Cómo Trabajamos</div>
-      <div class="nh1">Cinco pasos.<br>Un relato con propósito.</div>
-      <p class="ntag">No creemos en las fórmulas genéricas. En LUNA convertimos la autenticidad de cada organización en relatos audiovisuales con propósito, siguiendo un proceso riguroso que nos hace distintos y confiables.</p>
-      
-      <div class="timeline">
-        <div class="tstep active" onclick="selectPaso(0)">
-          <div class="tstep-dot"></div><span class="tstep-num">01</span>
-          <div class="tstep-t"><svg class="lucide"><use href="#icon-search"></use></svg>Descubrir</div>
-          <div class="tstep-d">Escuchamos a fondo para entender el ADN, los valores y el propósito real de tu organización.</div>
-        </div>
-        <div class="tstep" onclick="selectPaso(1)">
-          <div class="tstep-dot"></div><span class="tstep-num">02</span>
-          <div class="tstep-t"><svg class="lucide"><use href="#icon-target"></use></svg>Identificar</div>
-          <div class="tstep-d">Definimos con claridad el mensaje y la audiencia que darán sentido a cada pieza.</div>
-        </div>
-        <div class="tstep" onclick="selectPaso(2)">
-          <div class="tstep-dot"></div><span class="tstep-num">03</span>
-          <div class="tstep-t"><svg class="lucide"><use href="#icon-film"></use></svg>Elaborar</div>
-          <div class="tstep-d">Producimos contenido audiovisual de calidad cinematográfica, cuidando cada detalle del relato.</div>
-        </div>
-        <div class="tstep" onclick="selectPaso(3)">
-          <div class="tstep-dot"></div><span class="tstep-num">04</span>
-          <div class="tstep-t"><svg class="lucide"><use href="#icon-rocket"></use></svg>Implementar</div>
-          <div class="tstep-d">Llevamos cada pieza al canal correcto para que llegue a las personas indicadas.</div>
-        </div>
-        <div class="tstep" onclick="selectPaso(4)">
-          <div class="tstep-dot"></div><span class="tstep-num">05</span>
-          <div class="tstep-t"><svg class="lucide"><use href="#icon-chart"></use></svg>Medir</div>
-          <div class="tstep-d">Analizamos resultados y optimizamos, porque nos comprometemos con el impacto real de tu inversión.</div>
+  <main>
+    <section id="hero">
+      <img src="luna_icon.png" alt="" class="hero-mark">
+      <div class="slide active">
+        <div class="slide-content">
+          <div class="slide-kicker">Estrategia</div>
+          <h2 class="slide-text">Comprendemos tu <span class="g">Esencia</span></h2>
+          <div class="slide-line"></div>
         </div>
       </div>
-      
-      <div id="proc-detail">
-        <p id="proc-detail-txt">
-          <strong>01. Descubrir:</strong> Escuchamos a fondo para entender el ADN, los valores y el propósito real de tu organización.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="showreel">
-    <div class="inn">
-      <div class="nlbl"><svg class="lucide"><use href="#icon-film"></use></svg>Portafolio Audiovisual</div>
-      <div class="nh1">Nuestra visión en movimiento</div>
-      <p class="ntag">Calidad cinematográfica y storytelling con sello propio. Desde Concepción producimos para marcas e instituciones de todo Chile —cada pieza, pensada para emocionar y conectar.</p>
-
-      <div class="video-grid">
-        <div class="video-wrapper featured" data-vertical="marca">
-          <iframe src="https://www.youtube.com/embed/guR7lwyTNx0" title="LUNA - Showreel 1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
-        <div class="video-wrapper" data-vertical="turismo">
-          <iframe src="https://www.youtube.com/embed/MRRr-tuuY48" title="LUNA - Showreel 2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
-        <div class="video-wrapper" data-vertical="industria">
-          <iframe src="https://www.youtube.com/embed/mUL-JCC8nY8" title="LUNA - Showreel 3" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
-        <div class="video-wrapper" data-vertical="turismo">
-          <iframe src="https://www.youtube.com/embed/nEDFc3iplAk" title="LUNA - Showreel 4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
-        <div class="video-wrapper" data-vertical="industria">
-          <iframe src="https://www.youtube.com/embed/bZaxslG1q9w" title="LUNA - Showreel 5" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <div class="slide">
+        <div class="slide-content">
+          <div class="slide-kicker">Producción</div>
+          <h2 class="slide-text">Potenciamos tu <span class="g">Mensaje</span></h2>
+          <div class="slide-line"></div>
         </div>
       </div>
-    </div>
-  </section>
-
-  <section class="section" id="servicios">
-    <div class="inn">
-      <div class="nlbl"><svg class="lucide"><use href="#icon-layers"></use></svg>Nuestros Servicios</div>
-      <div class="nh1">Consultoría Audiovisual y Marketing digital</div>
-      <p class="ntag">Cubrimos todas las necesidades de comunicación, producción y desarrollo digital para que tu organización comunique con propósito y coherencia.</p>
-
-      <div class="pricing-group">
-        <div class="pricing-title">Consultoría Audiovisual</div>
-        <div class="services-card">
-          <ul class="srv-list">
-            <li><svg class="lucide"><use href="#icon-building"></use></svg><span>Video Corporativo</span></li>
-            <li><svg class="lucide"><use href="#icon-building"></use></svg><span>Video Institucional</span></li>
-            <li><svg class="lucide"><use href="#icon-grad"></use></svg><span>Video Inductivo</span></li>
-            <li><svg class="lucide"><use href="#icon-megaphone"></use></svg><span>Publicidad y Comerciales</span></li>
-            <li><svg class="lucide"><use href="#icon-phone"></use></svg><span>Contenido para Redes Sociales</span></li>
-            <li><svg class="lucide"><use href="#icon-film"></use></svg><span>Documental / Reportaje</span></li>
-            <li><svg class="lucide"><use href="#icon-glasses"></use></svg><span>Realidad Mixta</span></li>
-            <li><svg class="lucide"><use href="#icon-mic"></use></svg><span>Podcast / Videopodcast</span></li>
-            <li><svg class="lucide"><use href="#icon-film"></use></svg><span>Cobertura de Eventos</span></li>
-            <li><svg class="lucide"><use href="#icon-radio"></use></svg><span>Streaming en Vivo</span></li>
-          </ul>
+      <div class="slide">
+        <div class="slide-content">
+          <div class="slide-kicker">Difusión</div>
+          <h2 class="slide-text">Conectamos con tu <span class="g">Audiencia</span></h2>
+          <div class="slide-line"></div>
         </div>
       </div>
-
-      <div class="pricing-group">
-        <div class="pricing-title">Marketing digital integrado</div>
-        <div class="services-card">
-          <ul class="srv-list">
-            <li><svg class="lucide"><use href="#icon-share"></use></svg><span>Gestión de Redes Sociales</span></li>
-            <li><svg class="lucide"><use href="#icon-target"></use></svg><span>Estrategia de Contenidos</span></li>
-            <li><svg class="lucide"><use href="#icon-trend"></use></svg><span>Pauta Digital (Paid Media)</span></li>
-            <li><svg class="lucide"><use href="#icon-radio"></use></svg><span>Optimización de Canales de RRSS</span></li>
-            <li><svg class="lucide"><use href="#icon-mail"></use></svg><span>Email Marketing</span></li>
-            <li><svg class="lucide"><use href="#icon-chart"></use></svg><span>Reportería y Analítica</span></li>
-          </ul>
+      <div class="slide">
+        <div class="slide-content">
+          <div class="slide-kicker">Resultados</div>
+          <h2 class="slide-text">Multiplicamos tu <span class="g">Valor</span></h2>
+          <div class="slide-line"></div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="section" id="tarifas">
-    <div class="inn">
-      <div class="nlbl"><svg class="lucide"><use href="#icon-wallet"></use></svg>Inversión y Planes</div>
-      <div class="nh1">Estructura Modular</div>
-      <p class="ntag">Del objetivo al resultado, con estándar profesional. Cuatro formas de trabajar con Luna según lo que tu organización necesita hoy — cada una es un punto de partida que se ajusta a tu proyecto.</p>
+    <section class="section" id="confianza">
+      <div class="inn">
+        <div class="nlbl"><svg class="lucide"><use href="#icon-spark"></use></svg>Micromomentos · Cada detalle comunica</div>
+        <div class="nh1">El mensaje indicado,<br>en el momento justo.</div>
+        <p class="ntag">Ya sea un destino que busca viajeros o una empresa que necesita inducir con rigor, la confianza se construye en pequeños instantes. Cada pieza que creamos emite las señales oportunas para fortalecer tu identidad, ganar la confianza de tu audiencia y convertir.</p>
 
-      <div class="pricing-group">
-        <div class="pgrid">
-          <div class="pcard">
-            <div class="pc-ico"><svg class="lucide"><use href="#icon-film"></use></svg></div>
-            <span class="pc-cat">Una pieza</span>
-            <h3 class="pc-name">Esencial</h3>
-            <div class="pc-rule"></div>
-            <p class="pc-pitch">1 pieza principal · 2 plataformas · guía de publicación.</p>
-            <p class="pc-term">Una pieza de máxima calidad con orientación estratégica.</p>
-            <a href="#contacto" class="pc-btn" onclick="selectService('esencial')">Cotiza tu plan</a>
+        <div class="signals">
+          <div class="sig">
+            <div class="sig-ico"><svg class="lucide"><use href="#icon-eye"></use></svg></div>
+            <h3>Posicionar</h3>
+            <p>En LUNA damos forma a tu identidad audiovisual: un destino que se vuelve deseable, una empresa que proyecta prestigio y solidez.</p>
           </div>
-          <div class="pcard">
-            <div class="pc-ico"><svg class="lucide"><use href="#icon-layers"></use></svg></div>
-            <span class="pc-cat">Recurrente</span>
-            <h3 class="pc-name">Contenidos</h3>
-            <div class="pc-rule"></div>
-            <p class="pc-pitch">4 a 8 piezas mensuales · gestión de redes · reporte mensual.</p>
-            <p class="pc-term">Presencia constante y consistente mes a mes.</p>
-            <a href="#contacto" class="pc-btn" onclick="selectService('contenidos')">Cotiza tu plan</a>
+          <div class="sig">
+            <div class="sig-ico"><svg class="lucide"><use href="#icon-shield"></use></svg></div>
+            <h3>Confiar</h3>
+            <p>Un destino confiable llena reservas; una empresa coherente cumple y protege. Cada detalle cuidado se traduce en credibilidad.</p>
           </div>
-          <div class="pcard premium">
-            <div class="pc-ico"><svg class="lucide"><use href="#icon-orbit"></use></svg></div>
-            <span class="pc-cat">Integral</span>
-            <h3 class="pc-name">360°</h3>
-            <div class="pc-rule"></div>
-            <p class="pc-pitch">Creamos, publicamos y potenciamos tu presencia, con resultados que ves cada mes.</p>
-            <p class="pc-term">El plan más completo para organizaciones con objetivos medibles.</p>
-            <a href="#contacto" class="pc-btn" onclick="selectService('360')">Agenda diagnóstico</a>
+          <div class="sig">
+            <div class="sig-ico"><svg class="lucide"><use href="#icon-trend"></use></svg></div>
+            <h3>Convertir</h3>
+            <p>Traducimos la atención en resultados medibles: reservas para el viajero correcto, compromiso del equipo adecuado. Comunicación con retorno.</p>
           </div>
-          <div class="pcard">
-            <div class="pc-ico"><svg class="lucide"><use href="#icon-radio"></use></svg></div>
-            <span class="pc-cat">Eventos en vivo</span>
-            <h3 class="pc-name">Broadcast</h3>
-            <div class="pc-rule"></div>
-            <p class="pc-pitch">Tu evento en vivo y un resumen listo para compartir en menos de 48 horas.</p>
-            <p class="pc-term">Cobertura audiovisual completa, con streaming en vivo.</p>
-            <a href="#contacto" class="pc-btn" onclick="selectService('broadcast')">Cotiza tu plan</a>
+        </div>
+
+        <div class="msg-strip">
+          <span class="ms-tag">El factor decisivo</span>
+          <span class="ms-big">El <span class="g">mensaje correcto</span> lo cambia todo.</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="soluciones">
+      <div class="inn">
+        <div class="nlbl"><svg class="lucide"><use href="#icon-door"></use></svg>Soluciones · Para quién lo hacemos</div>
+        <div class="nh1">Dos puertas de entrada,<br>una misma maestría.</div>
+        <p class="ntag">Mismo método, misma calidad cinematográfica. Descubre la línea que resuelve tus desafíos y cómo potenciamos tus objetivos.</p>
+
+        <div class="sol-grid">
+          <div class="sol-card" onclick="switchView('turismo')">
+            <div class="sol-ico"><svg class="lucide"><use href="#icon-mountain"></use></svg></div>
+            <h3>Turismo y Hospitalidad</h3>
+            <p>Rompe la estacionalidad y llena tus temporadas. Contenido que inspira viajes y convierte audiencias en reservas.</p>
+            <div class="sol-tags">
+              <span class="sol-tag">Destinos</span>
+              <span class="sol-tag">Reservas directas</span>
+              <span class="sol-tag">Pauta segmentada</span>
+              <span class="sol-tag">Subtitulado internacional</span>
+            </div>
+            <span class="sol-go">Ver soluciones de turismo <svg class="lucide"><use href="#icon-arrow-right"></use></svg></span>
+          </div>
+          <div class="sol-card" onclick="switchView('industria')">
+            <div class="sol-ico"><svg class="lucide"><use href="#icon-hardhat"></use></svg></div>
+            <h3>Industria y Empresas</h3>
+            <p>Producciones audiovisuales para el cumplimiento normativo y la reducción de accidentabilidad. Trazable, estandarizada y profesional.</p>
+            <div class="sol-tags">
+              <span class="sol-tag">Video corporativo</span>
+              <span class="sol-tag">Inducciones y SSO</span>
+              <span class="sol-tag">Capacitación</span>
+              <span class="sol-tag">Streaming corporativo</span>
+              <span class="sol-tag">Realidad mixta</span>
+            </div>
+            <span class="sol-go">Ver soluciones de industria <svg class="lucide"><use href="#icon-arrow-right"></use></svg></span>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="section" id="contacto">
-    <div id="clientes">
-      <div class="carousel-track" style="gap:0;" id="track">
-        <img src="clientlogos/01_corfo.png" alt="CORFO" class="logo-c">
-        <img src="clientlogos/02_cge.png" alt="CGE" class="logo-c logo-narrow">
-        <img src="clientlogos/03_shield.png" alt="Cliente" class="logo-c">
-        <img src="clientlogos/04_contur.png" alt="CONTUR Biobío" class="logo-c">
-        <img src="clientlogos/05_esquerre.png" alt="Esquerré" class="logo-c">
-        <img src="clientlogos/06_corparauco.png" alt="Corparauco" class="logo-c">
-        <img src="clientlogos/07_gore_nuble.png" alt="Gobierno Regional de Ñuble" class="logo-c">
-        <img src="clientlogos/08_virginio.png" alt="Instituto Virginio Gómez" class="logo-c">
-        <img src="clientlogos/09_at.png" alt="Cliente" class="logo-c">
-        <img src="clientlogos/10_uss.png" alt="Universidad San Sebastián" class="logo-c">
-        <img src="clientlogos/11_gore_biobio.png" alt="Gobierno Regional Biobío" class="logo-c">
-        <img src="clientlogos/12_sernatur.png" alt="Sernatur Región del Biobío" class="logo-c">
-        <img src="clientlogos/13_crest.png" alt="Cliente" class="logo-c">
-        <img src="clientlogos/14_parque.png" alt="Parque Museo Pedro del Río Zañartu" class="logo-c">
-        <img src="clientlogos/15_slep.png" alt="SLEP Andalién Sur" class="logo-c logo-narrow">
-        <img src="clientlogos/16_udec.png" alt="Universidad de Concepción" class="logo-c">
-        <img src="clientlogos/17_tusan.png" alt="Tusán" class="logo-c logo-wide">
-        <img src="clientlogos/18_mla.png" alt="MLA Servicios" class="logo-c logo-wide">
-      </div>
-    </div>
-
-    <div class="inn">
-      <div class="nlbl"><svg class="lucide"><use href="#icon-send"></use></svg>Contacto</div>
-      <div class="nh1">Hablemos de tu proyecto</div>
-      <p class="ntag" style="margin-bottom: 40px;">Déjanos tus datos y un resumen de lo que buscas. Nuestro equipo se pondrá en contacto contigo para agendar una reunión de diagnóstico.</p>
-      
-      <div class="contact-wrapper">
-        <div class="contact-form-col">
-          <form class="contact-form" id="main-contact-form" action="https://formsubmit.co/ajax/info@lunacreativa.cl" method="POST">
-            <input type="text" name="_honey" style="display:none">
-            <input type="hidden" name="_subject" value="Nuevo Lead: LUNA Comunicación Creativa">
-            <input type="hidden" name="_captcha" value="false">
-            
-            <div class="c-field">
-              <label class="c-label">Nombre o Empresa</label>
-              <input type="text" name="Nombre_Empresa" class="c-input" required placeholder="Ej. Tu empresa">
-            </div>
-            <div class="c-field">
-              <label class="c-label">Correo Electrónico</label>
-              <input type="email" name="Email" class="c-input" required placeholder="tu@correo.com">
-            </div>
-            <div class="c-field">
-              <label class="c-label">Sector</label>
-              <select name="Sector" class="c-select" id="sector-selector" required>
-                <option value="" disabled selected>Selecciona tu sector...</option>
-                <option value="turismo">Turismo y Hospitalidad</option>
-                <option value="industria">Industria y Empresas</option>
-                <option value="otro">Otro</option>
-              </select>
-            </div>
-            <div class="c-field">
-              <label class="c-label">Tipo de Servicio de Interés</label>
-              <select name="Servicio_Interes" class="c-select" id="service-selector" required>
-                <option value="" disabled selected>Selecciona una opción...</option>
-                <optgroup label="Planes">
-                  <option value="esencial">Plan Esencial</option>
-                  <option value="contenidos">Plan Contenidos</option>
-                  <option value="360">Plan 360°</option>
-                  <option value="broadcast">Plan Broadcast</option>
-                </optgroup>
-                <optgroup label="Productos audiovisuales">
-                  <option value="video-corporativo">Video Corporativo</option>
-                  <option value="video-institucional">Video Institucional</option>
-                  <option value="video-inductivo">Video Inductivo</option>
-                  <option value="publicidad">Publicidad y Comerciales</option>
-                  <option value="redes">Contenido para Redes Sociales</option>
-                  <option value="documental">Documental / Reportaje</option>
-                  <option value="realidad-mixta">Realidad Mixta</option>
-                  <option value="podcast">Podcast / Videopodcast</option>
-                  <option value="eventos">Cobertura de Eventos</option>
-                  <option value="streaming">Streaming en Vivo</option>
-                </optgroup>
-                <optgroup label="Marketing digital integrado">
-                  <option value="rrss">Gestión de Redes Sociales</option>
-                  <option value="estrategia">Estrategia de Contenidos</option>
-                  <option value="pauta">Pauta Digital (Paid Media)</option>
-                  <option value="optimizacion">Optimización de Canales de RRSS</option>
-                  <option value="email">Email Marketing</option>
-                  <option value="analitica">Reportería y Analítica</option>
-                </optgroup>
-                <option value="otro">Otro Requerimiento / Proyecto a Medida</option>
-              </select>
-            </div>
-            <div class="c-field">
-              <label class="c-label">Mensaje o Detalles del Proyecto</label>
-              <textarea name="Mensaje" class="c-textarea" required placeholder="Cuéntanos brevemente sobre los objetivos y desafíos que buscas resolver..."></textarea>
-            </div>
-            <button type="submit" class="c-submit" id="submit-btn">Enviar Mensaje</button>
-          </form>
-        </div>
+    <section class="section" id="metodo">
+      <div class="inn">
+        <div class="nlbl"><svg class="lucide"><use href="#icon-compass"></use></svg>Cómo Trabajamos</div>
+        <div class="nh1">Cinco pasos.<br>Un relato con propósito.</div>
+        <p class="ntag">No creemos en las fórmulas genéricas. En LUNA convertimos la autenticidad de cada organización en relatos audiovisuales con propósito, siguiendo un proceso riguroso que nos hace distintos y confiables.</p>
         
-        <div class="contact-info-col" style="margin-top: 20px;">
-          <p><svg class="lucide"><use href="#icon-pin"></use></svg>Barros Arana 492 Of. 78 Torre Ligure, Concepción — Región del Biobío, Chile</p>
-          <div class="social-row">
-            <a href="https://www.linkedin.com/company/luna-comunicacion-creativa" target="_blank" rel="noopener" aria-label="LinkedIn de LUNA Comunicación Creativa"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.22.79 24 1.77 24h20.45c.98 0 1.78-.78 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg></a>
-            <a href="https://www.instagram.com/lunacomunicacioncreativa" target="_blank" rel="noopener" aria-label="Instagram de LUNA Comunicación Creativa"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.43.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.43.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.72 3.72 0 0 1-1.38-.9 3.72 3.72 0 0 1-.9-1.38c-.16-.43-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.43-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zM12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.9.33 4.14.63c-.79.3-1.46.72-2.12 1.38C1.35 2.67.94 3.34.63 4.14.33 4.9.13 5.78.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.15.56 2.91.3.8.72 1.47 1.38 2.13.66.66 1.33 1.07 2.12 1.38.76.3 1.64.5 2.91.56C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.15-.26 2.91-.56.8-.3 1.47-.72 2.13-1.38.66-.66 1.07-1.33 1.38-2.13.3-.76.5-1.64.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.27-.26-2.15-.56-2.91-.3-.8-.72-1.47-1.38-2.13A5.92 5.92 0 0 0 19.86.63c-.76-.3-1.64-.5-2.91-.56C15.67.01 15.26 0 12 0zm0 5.84a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.41-10.85a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z"/></svg></a>
-            <a href="https://www.youtube.com/@lunacomunicacioncreativa" target="_blank" rel="noopener" aria-label="YouTube de LUNA Comunicación Creativa"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.5 6.2a3.02 3.02 0 0 0-2.12-2.14C19.5 3.55 12 3.55 12 3.55s-7.5 0-9.38.51A3.02 3.02 0 0 0 .5 6.2C0 8.08 0 12 0 12s0 3.92.5 5.8a3.02 3.02 0 0 0 2.12 2.14c1.88.51 9.38.51 9.38.51s7.5 0 9.38-.51a3.02 3.02 0 0 0 2.12-2.14c.5-1.88.5-5.8.5-5.8s0-3.92-.5-5.8zM9.6 15.57V8.43L15.82 12 9.6 15.57z"/></svg></a>
+        <div class="timeline">
+          <div class="tstep active">
+            <div class="tstep-dot"></div><span class="tstep-num">01</span>
+            <div class="tstep-t"><svg class="lucide"><use href="#icon-search"></use></svg>Descubrir</div>
+            <div class="tstep-d">Escuchamos a fondo para entender el ADN, los valores y el propósito real de tu organización.</div>
           </div>
+          <div class="tstep">
+            <div class="tstep-dot"></div><span class="tstep-num">02</span>
+            <div class="tstep-t"><svg class="lucide"><use href="#icon-target"></use></svg>Identificar</div>
+            <div class="tstep-d">Definimos con claridad el mensaje y la audiencia que darán sentido a cada pieza.</div>
+          </div>
+          <div class="tstep">
+            <div class="tstep-dot"></div><span class="tstep-num">03</span>
+            <div class="tstep-t"><svg class="lucide"><use href="#icon-film"></use></svg>Elaborar</div>
+            <div class="tstep-d">Producimos contenido audiovisual de calidad cinematográfica, cuidando cada detalle del relato.</div>
+          </div>
+          <div class="tstep">
+            <div class="tstep-dot"></div><span class="tstep-num">04</span>
+            <div class="tstep-t"><svg class="lucide"><use href="#icon-rocket"></use></svg>Implementar</div>
+            <div class="tstep-d">Llevamos cada pieza al canal correcto para que llegue a las personas indicadas.</div>
+          </div>
+          <div class="tstep">
+            <div class="tstep-dot"></div><span class="tstep-num">05</span>
+            <div class="tstep-t"><svg class="lucide"><use href="#icon-chart"></use></svg>Medir</div>
+            <div class="tstep-d">Analizamos resultados y optimizamos, porque nos comprometemos con el impacto real de tu inversión.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="showreel">
+      <div class="inn">
+        <div class="nlbl"><svg class="lucide"><use href="#icon-film"></use></svg>Portafolio Audiovisual</div>
+        <div class="nh1">Nuestra visión en movimiento</div>
+        <p class="ntag">Calidad cinematográfica y storytelling con sello propio. Desde Concepción producimos para marcas e instituciones de todo Chile —cada pieza, pensada para emocionar y conectar.</p>
+
+        <div class="video-grid">
+          <div class="video-wrapper featured">
+            <iframe src="https://www.youtube.com/embed/guR7lwyTNx0" title="LUNA - Showreel 1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          <div class="video-wrapper">
+            <iframe src="https://www.youtube.com/embed/MRRr-tuuY48" title="LUNA - Showreel 2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          <div class="video-wrapper">
+            <iframe src="https://www.youtube.com/embed/mUL-JCC8nY8" title="LUNA - Showreel 3" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          <div class="video-wrapper">
+            <iframe src="https://www.youtube.com/embed/nEDFc3iplAk" title="LUNA - Showreel 4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          <div class="video-wrapper">
+            <iframe src="https://www.youtube.com/embed/bZaxslG1q9w" title="LUNA - Showreel 5" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="servicios">
+      <div class="inn">
+        <div class="nlbl"><svg class="lucide"><use href="#icon-layers"></use></svg>Nuestros Servicios</div>
+        <div class="nh1">Consultoría Audiovisual y Marketing digital</div>
+        <p class="ntag">Cubrimos todas las necesidades de comunicación, producción y desarrollo digital para que tu organización comunique con propósito y coherencia.</p>
+
+        <div class="pricing-group">
+          <div class="pricing-title">Consultoría Audiovisual</div>
+          <div class="services-card">
+            <ul class="srv-list">
+              <li><svg class="lucide"><use href="#icon-building"></use></svg><span>Video Corporativo</span></li>
+              <li><svg class="lucide"><use href="#icon-building"></use></svg><span>Video Institucional</span></li>
+              <li><svg class="lucide"><use href="#icon-grad"></use></svg><span>Video Inductivo</span></li>
+              <li><svg class="lucide"><use href="#icon-megaphone"></use></svg><span>Publicidad y Comerciales</span></li>
+              <li><svg class="lucide"><use href="#icon-phone"></use></svg><span>Contenido para Redes Sociales</span></li>
+              <li><svg class="lucide"><use href="#icon-film"></use></svg><span>Documental / Reportaje</span></li>
+              <li><svg class="lucide"><use href="#icon-glasses"></use></svg><span>Realidad Mixta</span></li>
+              <li><svg class="lucide"><use href="#icon-mic"></use></svg><span>Podcast / Videopodcast</span></li>
+              <li><svg class="lucide"><use href="#icon-film"></use></svg><span>Cobertura de Eventos</span></li>
+              <li><svg class="lucide"><use href="#icon-radio"></use></svg><span>Streaming en Vivo</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="pricing-group">
+          <div class="pricing-title">Marketing digital integrado</div>
+          <div class="services-card">
+            <ul class="srv-list">
+              <li><svg class="lucide"><use href="#icon-share"></use></svg><span>Gestión de Redes Sociales</span></li>
+              <li><svg class="lucide"><use href="#icon-target"></use></svg><span>Estrategia de Contenidos</span></li>
+              <li><svg class="lucide"><use href="#icon-trend"></use></svg><span>Pauta Digital (Paid Media)</span></li>
+              <li><svg class="lucide"><use href="#icon-radio"></use></svg><span>Optimización de Canales de RRSS</span></li>
+              <li><svg class="lucide"><use href="#icon-mail"></use></svg><span>Email Marketing</span></li>
+              <li><svg class="lucide"><use href="#icon-chart"></use></svg><span>Reportería y Analítica</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="tarifas">
+      <div class="inn">
+        <div class="nlbl"><svg class="lucide"><use href="#icon-wallet"></use></svg>Inversión y Planes</div>
+        <div class="nh1">Estructura Modular</div>
+        <p class="ntag">Del objetivo al resultado, con estándar profesional. Cuatro formas de trabajar con Luna según lo que tu organización necesita hoy — cada una es un punto de partida que se ajusta a tu proyecto.</p>
+
+        <div class="pricing-group">
+          <div class="pgrid">
+            <div class="pcard">
+              <div class="pc-ico"><svg class="lucide"><use href="#icon-film"></use></svg></div>
+              <span class="pc-cat">Una pieza</span>
+              <h3 class="pc-name">Esencial</h3>
+              <div class="pc-rule"></div>
+              <p class="pc-pitch">1 pieza principal · 2 plataformas · guía de publicación.</p>
+              <p class="pc-term">Una pieza de máxima calidad con orientación estratégica.</p>
+              <a href="#contacto" class="pc-btn">Cotiza tu plan</a>
+            </div>
+            <div class="pcard">
+              <div class="pc-ico"><svg class="lucide"><use href="#icon-layers"></use></svg></div>
+              <span class="pc-cat">Recurrente</span>
+              <h3 class="pc-name">Contenidos</h3>
+              <div class="pc-rule"></div>
+              <p class="pc-pitch">4 a 8 piezas mensuales · gestión de redes · reporte mensual.</p>
+              <p class="pc-term">Presencia constante y consistente mes a mes.</p>
+              <a href="#contacto" class="pc-btn">Cotiza tu plan</a>
+            </div>
+            <div class="pcard premium">
+              <div class="pc-ico"><svg class="lucide"><use href="#icon-orbit"></use></svg></div>
+              <span class="pc-cat">Integral</span>
+              <h3 class="pc-name">360°</h3>
+              <div class="pc-rule"></div>
+              <p class="pc-pitch">Creamos, publicamos y potenciamos tu presencia, con resultados que ves cada mes.</p>
+              <p class="pc-term">El plan más completo para organizaciones con objetivos medibles.</p>
+              <a href="#contacto" class="pc-btn">Agenda diagnóstico</a>
+            </div>
+            <div class="pcard">
+              <div class="pc-ico"><svg class="lucide"><use href="#icon-radio"></use></svg></div>
+              <span class="pc-cat">Eventos en vivo</span>
+              <h3 class="pc-name">Broadcast</h3>
+              <div class="pc-rule"></div>
+              <p class="pc-pitch">Tu evento en vivo y un resumen listo para compartir en menos de 48 horas.</p>
+              <p class="pc-term">Cobertura audiovisual completa, con streaming en vivo.</p>
+              <a href="#contacto" class="pc-btn">Cotiza tu plan</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contacto">
+      <div id="clientes">
+        <div class="carousel-track" style="gap:0;">
+          <img src="clientlogos/01_corfo.png" alt="CORFO" class="logo-c">
+          <img src="clientlogos/02_cge.png" alt="CGE" class="logo-c logo-narrow">
+          <img src="clientlogos/03_shield.png" alt="Cliente" class="logo-c">
+          <img src="clientlogos/04_contur.png" alt="CONTUR Biobío" class="logo-c">
+          <img src="clientlogos/05_esquerre.png" alt="Esquerré" class="logo-c">
+          <img src="clientlogos/06_corparauco.png" alt="Corparauco" class="logo-c">
+          <img src="clientlogos/07_gore_nuble.png" alt="Gobierno Regional de Ñuble" class="logo-c">
+          <img src="clientlogos/08_virginio.png" alt="Instituto Virginio Gómez" class="logo-c">
+          <img src="clientlogos/09_at.png" alt="Cliente" class="logo-c">
+          <img src="clientlogos/10_uss.png" alt="Universidad San Sebastián" class="logo-c">
+          <img src="clientlogos/11_gore_biobio.png" alt="Gobierno Regional Biobío" class="logo-c">
+          <img src="clientlogos/12_sernatur.png" alt="Sernatur Región del Biobío" class="logo-c">
+          <img src="clientlogos/13_crest.png" alt="Cliente" class="logo-c">
+          <img src="clientlogos/14_parque.png" alt="Parque Museo Pedro del Río Zañartu" class="logo-c">
+          <img src="clientlogos/15_slep.png" alt="SLEP Andalién Sur" class="logo-c logo-narrow">
+          <img src="clientlogos/16_udec.png" alt="Universidad de Concepción" class="logo-c">
+          <img src="clientlogos/17_tusan.png" alt="Tusán" class="logo-c logo-wide">
+          <img src="clientlogos/18_mla.png" alt="MLA Servicios" class="logo-c logo-wide">
+          <img src="clientlogos/01_corfo.png" alt="CORFO" class="logo-c">
+          <img src="clientlogos/02_cge.png" alt="CGE" class="logo-c logo-narrow">
+          <img src="clientlogos/03_shield.png" alt="Cliente" class="logo-c">
+          <img src="clientlogos/04_contur.png" alt="CONTUR Biobío" class="logo-c">
+          <img src="clientlogos/05_esquerre.png" alt="Esquerré" class="logo-c">
+          <img src="clientlogos/06_corparauco.png" alt="Corparauco" class="logo-c">
+          <img src="clientlogos/07_gore_nuble.png" alt="Gobierno Regional de Ñuble" class="logo-c">
+          <img src="clientlogos/08_virginio.png" alt="Instituto Virginio Gómez" class="logo-c">
+          <img src="clientlogos/09_at.png" alt="Cliente" class="logo-c">
+        </div>
+      </div>
+
+      <div class="inn">
+        <div class="nlbl"><svg class="lucide"><use href="#icon-send"></use></svg>Contacto</div>
+        <div class="nh1">Hablemos de tu proyecto</div>
+        <p class="ntag" style="margin-bottom: 40px;">Déjanos tus datos y un resumen de lo que buscas. Nuestro equipo se pondrá en contacto contigo para agendar una reunión de diagnóstico.</p>
+        
+        <div class="contact-wrapper">
+          <div class="contact-form-col">
+            <form class="contact-form" id="main-contact-form" action="https://formsubmit.co/ajax/info@lunacreativa.cl" method="POST">
+              <input type="text" name="_honey" style="display:none">
+              <input type="hidden" name="_subject" value="Nuevo Lead: LUNA Comunicación Creativa">
+              <input type="hidden" name="_next" value="https://lunacreativa.cl/gracias">
+              <input type="hidden" name="_captcha" value="false">
+              
+              <div class="c-field">
+                <label class="c-label">Nombre o Empresa</label>
+                <input type="text" name="Nombre_Empresa" class="c-input" required placeholder="Ej. Tu empresa">
+              </div>
+              <div class="c-field">
+                <label class="c-label">Correo Electrónico</label>
+                <input type="email" name="Email" class="c-input" required placeholder="tu@correo.com">
+              </div>
+              <div class="c-field">
+                <label class="c-label">Sector</label>
+                <select name="Sector" class="c-select" id="sector-selector" required>
+                  <option value="" disabled selected>Selecciona tu sector...</option>
+                  <option value="turismo">Turismo y Hospitalidad</option>
+                  <option value="industria">Industria y Empresas</option>
+                  <option value="otro">Otro</option>
+                </select>
+              </div>
+              <div class="c-field">
+                <label class="c-label">Tipo de Servicio de Interés</label>
+                <select name="Servicio_Interes" class="c-select" id="service-selector" required>
+                  <option value="" disabled selected>Selecciona una opción...</option>
+                  <optgroup label="Planes">
+                    <option value="esencial">Plan Esencial</option>
+                    <option value="contenidos">Plan Contenidos</option>
+                    <option value="360">Plan 360°</option>
+                    <option value="broadcast">Plan Broadcast</option>
+                  </optgroup>
+                  <optgroup label="Productos audiovisuales">
+                    <option value="video-corporativo">Video Corporativo</option>
+                    <option value="video-institucional">Video Institucional</option>
+                    <option value="video-inductivo">Video Inductivo</option>
+                    <option value="publicidad">Publicidad y Comerciales</option>
+                    <option value="redes">Contenido para Redes Sociales</option>
+                    <option value="documental">Documental / Reportaje</option>
+                    <option value="realidad-mixta">Realidad Mixta</option>
+                    <option value="podcast">Podcast / Videopodcast</option>
+                    <option value="eventos">Cobertura de Eventos</option>
+                    <option value="streaming">Streaming en Vivo</option>
+                  </optgroup>
+                  <option value="otro">Otro Requerimiento / Proyecto a Medida</option>
+                </select>
+              </div>
+              <div class="c-field">
+                <label class="c-label">Mensaje o Detalles del Proyecto</label>
+                <textarea name="Mensaje" class="c-textarea" required placeholder="Cuéntanos brevemente sobre los objetivos y desafíos que buscas resolver..."></textarea>
+              </div>
+              <button type="submit" class="c-submit">Enviar Mensaje</button>
+            </form>
+          </div>
+          
+          <div class="contact-info-col" style="margin-top: 20px;">
+            <p><svg class="lucide"><use href="#icon-pin"></use></svg>Barros Arana 492 Of. 78 Torre Ligure, Concepción — Región del Biobío, Chile</p>
+            <div class="social-row">
+              <a href="https://www.linkedin.com/company/luna-comunicacion-creativa" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.22.79 24 1.77 24h20.45c.98 0 1.78-.78 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg></a>
+              <a href="https://www.instagram.com/lunacomunicacioncreativa" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.43.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.43.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.72 3.72 0 0 1-1.38-.9 3.72 3.72 0 0 1-.9-1.38c-.16-.43-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.43-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zM12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.9.33 4.14.63c-.79.3-1.46.72-2.12 1.38C1.35 2.67.94 3.34.63 4.14.33 4.9.13 5.78.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.15.56 2.91.3.8.72 1.47 1.38 2.13.66.66 1.33 1.07 2.12 1.38.76.3 1.64.5 2.91.56C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.15-.26 2.91-.56.8-.3 1.47-.72 2.13-1.38.66-.66 1.07-1.33 1.38-2.13.3-.76.5-1.64.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.27-.26-2.15-.56-2.91-.3-.8-.72-1.47-1.38-2.13A5.92 5.92 0 0 0 19.86.63c-.76-.3-1.64-.5-2.91-.56C15.67.01 15.26 0 12 0zm0 5.84a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.41-10.85a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z"/></svg></a>
+              <a href="https://www.youtube.com/@lunacomunicacioncreativa" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M23.5 6.2a3.02 3.02 0 0 0-2.12-2.14C19.5 3.55 12 3.55 12 3.55s-7.5 0-9.38.51A3.02 3.02 0 0 0 .5 6.2C0 8.08 0 12 0 12s0 3.92.5 5.8a3.02 3.02 0 0 0 2.12 2.14c1.88.51 9.38.51 9.38.51s7.5 0 9.38-.51a3.02 3.02 0 0 0 2.12-2.14c.5-1.88.5-5.8.5-5.8s0-3.92-.5-5.8zM9.6 15.57V8.43L15.82 12 9.6 15.57z"/></svg></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="foot">
+      <div class="foot-l">
+        <img src="luna_icon.png" alt="LUNA">
+        <span><b>LUNA</b> Comunicación Creativa<br>Concepción — Región del Biobío, Chile</span>
+      </div>
+      <div class="foot-nav">
+        <a href="#view-home">Home</a>
+        <a href="#tarifas">Planes</a>
+        <a href="#contacto">Contacto</a>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<div id="view-industria" class="page-view">
+  <header>
+    <div class="hc">
+      <div class="logo-container">
+        <a onclick="switchView('home')" style="cursor:pointer;">
+          <img src="luna_icon.png" alt="LUNA" class="brand-icon">
+          <span class="brand-text">
+            <span class="brand-name">LUNA</span>
+            <span class="brand-tag">Comunicación <span class="creativa">Creativa</span></span>
+          </span>
+        </a>
+      </div>
+      <nav>
+        <ul>
+          <li><a class="back nlink" onclick="switchView('home')"><svg class="lucide"><use href="#icon-arrow-left"></use></svg>Home</a></li>
+          <li><a class="cta" href="#contacto-industria">Cotiza tu proyecto</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="lhero">
+    <img src="luna_icon.png" alt="" class="lhero-mark">
+    <div class="lhero-inner">
+      <span class="vbadge"><svg class="lucide"><use href="#icon-hardhat"></use></svg>Industria y Empresas</span>
+      <h1>Comunica para <span class="g">cumplir y proteger.</span></h1>
+      <p class="lead">No es marketing: es cumplimiento normativo y reducción de accidentabilidad. Producimos inducciones, procedimientos y capacitación audiovisual estandarizada y trazable, integrando realidad mixta, calidad cinematográfica y rigor de proceso.</p>
+      <div class="lhero-actions">
+        <a class="btn-primary" href="#contacto-industria">Cotiza tu proyecto <svg class="lucide"><use href="#icon-arrow-diag"></use></svg></a>
+        <a class="btn-ghost" href="#servicios-industria">Ver soluciones <svg class="lucide"><use href="#icon-arrow-down"></use></svg></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec alt" id="argumento">
+    <div class="wrap">
+      <div class="shead">
+        <div class="snum"><span class="ln"></span>El argumento</div>
+        <h2 class="stitle">Cada inducción<br><span class="g">cuenta y queda registrada.</span></h2>
+        <p class="sdesc">En entornos industriales, una comunicación clara no es un lujo: es una obligación legal y un factor directo de seguridad. Estandarizamos tu mensaje e incorporamos realidad mixta para recrear escenarios de riesgo sin exponer a nadie, para que todos reciban exactamente la misma inducción, siempre.</p>
+      </div>
+      <div class="arg-grid">
+        <div class="arg">
+          <div class="arg-ico"><svg class="lucide"><use href="#icon-scale"></use></svg></div>
+          <h3>Cumplimiento normativo</h3>
+          <p>Material audiovisual alineado a tus protocolos y a la normativa vigente de prevención de riesgos, listo para auditorías.</p>
+        </div>
+        <div class="arg">
+          <div class="arg-ico"><svg class="lucide"><use href="#icon-shield"></use></svg></div>
+          <h3>Menos accidentabilidad</h3>
+          <p>Una inducción memorable se retiene mejor. El video y la realidad mixta reducen errores de interpretación y refuerzan la conducta segura.</p>
+        </div>
+        <div class="arg">
+          <div class="arg-ico"><svg class="lucide"><use href="#icon-list"></use></svg></div>
+          <h3>Trazable y estandarizado</h3>
+          <p>Cada colaborador recibe la misma capacitación, con registro de visualización para respaldar el cumplimiento.</p>
+        </div>
+        <div class="arg">
+          <div class="arg-ico"><svg class="lucide"><use href="#icon-glasses"></use></svg></div>
+          <h3>Realidad mixta</h3>
+          <p>Recreamos faenas, equipos y situaciones de riesgo en entornos inmersivos para capacitar de forma segura, realista y sin detener la operación.</p>
         </div>
       </div>
     </div>
   </section>
-</main>
+
+  <section class="sec" id="servicios-industria">
+    <div class="wrap">
+      <div class="shead">
+        <div class="snum"><span class="ln"></span>Qué hacemos para ti</div>
+        <h2 class="stitle">Producción con <span class="g">rigor de proceso</span></h2>
+        <p class="sdesc">Desde la inducción de seguridad hasta la memoria institucional: contenido que documenta, capacita y proyecta autoridad.</p>
+      </div>
+      <ul class="svc-list">
+        <li><span class="ico"><svg class="lucide"><use href="#icon-building"></use></svg></span><div><h4>Video corporativo e institucional</h4><p>Presentación oficial de tu organización ante clientes, socios e inversionistas.</p></div></li>
+        <li><span class="ico"><svg class="lucide"><use href="#icon-grad"></use></svg></span><div><h4>Video inductivo</h4><p>Onboarding y bienvenida estandarizada: la misma experiencia para cada nuevo colaborador.</p></div></li>
+        <li><span class="ico"><svg class="lucide"><use href="#icon-clipboard"></use></svg></span><div><h4>Procedimientos y SSO</h4><p>Inducciones de seguridad, protocolos y capacitación audiovisual trazable y auditable.</p></div></li>
+        <li><span class="ico"><svg class="lucide"><use href="#icon-book"></use></svg></span><div><h4>Capacitación audiovisual</h4><p>Módulos e-learning con subtítulos y registro, listos para tu plataforma de formación.</p></div></li>
+        <li><span class="ico"><svg class="lucide"><use href="#icon-radio"></use></svg></span><div><h4>Streaming de eventos corporativos</h4><p>Transmisión profesional de juntas, lanzamientos y ceremonias, con respaldo y contingencias.</p></div></li>
+        <li><span class="ico"><svg class="lucide"><use href="#icon-glasses"></use></svg></span><div><h4>Realidad mixta</h4><p>Simuladores y entornos inmersivos que recrean faenas y riesgos para capacitar de forma segura, realista y sin detener la operación.</p></div></li>
+        <li><span class="ico"><svg class="lucide"><use href="#icon-chart"></use></svg></span><div><h4>Reportería y trazabilidad</h4><p>Evidencia de alcance y visualización para respaldar auditorías y planes de prevención.</p></div></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec alt" id="portafolio-industria">
+    <div class="wrap">
+      <div class="shead">
+        <div class="snum"><span class="ln"></span>Portafolio</div>
+        <h2 class="stitle">Procesos <span class="g">documentados en pantalla</span></h2>
+        <p class="sdesc">Una muestra de piezas producidas para industria, capacitación y comunicación corporativa.</p>
+      </div>
+      <div class="video-grid">
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/mUL-JCC8nY8" title="LUNA - Portafolio Industria 1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/bZaxslG1q9w" title="LUNA - Portafolio Industria 2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec alt" id="evidencia-industria">
+    <div class="wrap">
+      <div class="shead" style="max-width:860px; margin-left:auto; margin-right:auto; text-align:center;">
+        <div class="snum" style="justify-content:center;"><span class="ln"></span>Evidencia<span class="ln"></span></div>
+        <h2 class="stitle">Empresas e instituciones<br>que <span class="g">ya confían</span></h2>
+        <p class="sdesc" style="margin-left:auto; margin-right:auto;">Empresas, organismos públicos y casas de estudio ya confían en LUNA para comunicar, capacitar y proteger a sus equipos con estándar profesional.</p>
+      </div>
+      <div class="ev-carousel-wrap">
+        <div class="ev-carousel-track">
+          <img src="clientlogos/02_cge.png" alt="CGE" class="logo-c logo-narrow">
+          <img src="clientlogos/01_corfo.png" alt="CORFO" class="logo-c">
+          <img src="clientlogos/16_udec.png" alt="Universidad de Concepción" class="logo-c">
+          <img src="clientlogos/10_uss.png" alt="Universidad San Sebastián" class="logo-c">
+          <img src="clientlogos/08_virginio.png" alt="Instituto Virginio Gómez" class="logo-c">
+          <img src="clientlogos/15_slep.png" alt="SLEP Andalién Sur" class="logo-c logo-narrow">
+          <img src="clientlogos/17_tusan.png" alt="Tusán" class="logo-c logo-wide">
+          <img src="clientlogos/18_mla.png" alt="MLA Servicios" class="logo-c logo-wide">
+          <img src="clientlogos/02_cge.png" alt="CGE" class="logo-c logo-narrow">
+          <img src="clientlogos/01_corfo.png" alt="CORFO" class="logo-c">
+          <img src="clientlogos/16_udec.png" alt="Universidad de Concepción" class="logo-c">
+        </div>
+      </div>
+      <div class="plan-note" style="max-width:860px; margin-left:auto; margin-right:auto; justify-content:center; text-align:center;">
+        <p>Mismo método, misma calidad. Un <b>video inductivo</b> puede resolverse como Plan <b>Esencial</b>; un <b>programa SSO anual</b> con actualizaciones encaja en un Plan <b>Contenidos</b> o <b>360°</b>. La estructura modular se ajusta a tu operación.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <h2>Comunicación que capacita, protege y respalda.</h2>
+    <p>Cuéntanos tu operación y tus desafíos. Diseñamos una consultoría audiovisual a la medida de tu empresa.</p>
+    <a class="btn-dark" href="#contacto-industria">Conversemos tu proyecto <svg class="lucide"><use href="#icon-arrow-right"></use></svg></a>
+  </section>
+
+  <section class="sec" id="contacto-industria">
+    <div class="wrap">
+      <div class="shead" style="max-width:640px; margin-left:auto; margin-right:auto; text-align:center;">
+        <div class="snum" style="justify-content:center;"><span class="ln"></span>Contacto<span class="ln"></span></div>
+        <h2 class="stitle">Hablemos de tu <span class="g">operación</span></h2>
+        <p class="sdesc" style="margin-left:auto; margin-right:auto;">Déjanos tus datos y un resumen de tu proyecto. Te contactaremos para agendar una reunión de diagnóstico.</p>
+      </div>
+      <form class="contact-form" action="https://formsubmit.co/ajax/info@lunacreativa.cl" method="POST" id="industria-form">
+        <input type="text" name="_honey" style="display:none">
+        <input type="hidden" name="_subject" value="Nuevo Lead: Industria y Empresas — LUNA">
+        <input type="hidden" name="_next" value="https://lunacreativa.cl/gracias">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="Sector" value="Industria y Empresas">
+        <div class="c-field">
+          <label class="c-label">Nombre o Empresa</label>
+          <input type="text" name="Nombre_Empresa" class="c-input" required placeholder="Ej. tu empresa">
+        </div>
+        <div class="c-field">
+          <label class="c-label">Correo Electrónico</label>
+          <input type="email" name="Email" class="c-input" required placeholder="tu@correo.com">
+        </div>
+        <div class="c-field">
+          <label class="c-label">Tipo de Servicio de Interés</label>
+          <select name="Servicio_Interes" class="c-select" required>
+            <option value="" disabled selected>Selecciona una opción...</option>
+            <optgroup label="Planes">
+              <option value="esencial">Plan Esencial</option>
+              <option value="contenidos">Plan Contenidos</option>
+              <option value="360">Plan 360°</option>
+              <option value="broadcast">Plan Broadcast</option>
+            </optgroup>
+            <optgroup label="Industria y Empresas">
+              <option value="video-corporativo">Video Corporativo e Institucional</option>
+              <option value="video-inductivo">Video Inductivo</option>
+              <option value="procedimientos-sso">Procedimientos y SSO</option>
+              <option value="capacitacion">Capacitación Audiovisual</option>
+              <option value="streaming-eventos">Streaming de Eventos Corporativos</option>
+              <option value="realidad-mixta">Realidad Mixta</option>
+              <option value="reporteria">Reportería y Trazabilidad</option>
+            </optgroup>
+            <option value="otro">Otro Requerimiento / Proyecto a Medida</option>
+          </select>
+        </div>
+        <div class="c-field">
+          <label class="c-label">Mensaje</label>
+          <textarea name="Mensaje" class="c-textarea" required placeholder="Cuéntanos brevemente sobre tu operación y tus objetivos..."></textarea>
+        </div>
+        <button type="submit" class="c-submit">Enviar Mensaje</button>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <div class="foot">
+      <div class="foot-l">
+        <img src="luna_icon.png" alt="LUNA">
+        <span><b>LUNA</b> Comunicación Creativa<br>Concepción — Región del Biobío, Chile</span>
+      </div>
+      <div class="foot-nav">
+        <a onclick="switchView('home')">Home</a>
+        <a onclick="switchView('home'); setTimeout(() => window.location.hash = '#tarifas', 100)">Planes</a>
+        <a href="#contacto-industria">Contacto</a>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<div id="view-turismo" class="page-view">
+  <header>
+    <div class="hc">
+      <div class="logo-container">
+        <a onclick="switchView('home')" style="cursor:pointer;">
+          <img src="luna_icon.png" alt="LUNA" class="brand-icon">
+          <span class="brand-text">
+            <span class="brand-name">LUNA</span>
+            <span class="brand-tag">Comunicación <span class="creativa">Creativa</span></span>
+          </span>
+        </a>
+      </div>
+      <nav>
+        <ul>
+          <li><a class="back nlink" onclick="switchView('home')"><svg class="lucide"><use href="#icon-arrow-left"></use></svg>Home</a></li>
+          <li><a class="cta" href="#contacto-turismo">Cotiza tu proyecto</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="lhero">
+    <img src="luna_icon.png" alt="" class="lhero-mark">
+    <div class="lhero-inner">
+      <span class="vbadge"><svg class="lucide"><use href="#icon-palmtree"></use></svg>Turismo y Hospitalidad</span>
+      <h1>Llena tu temporada. <span class="g">Todo el año.</span></h1>
+      <p class="lead">Tu destino merece brillar los doce meses del año. Producimos contenido audiovisual que inspira viajes, posiciona tu destino y convierte audiencias en reservas directas.</p>
+      <div class="lhero-actions">
+        <a class="btn-primary" href="#contacto-turismo">Cotiza tu proyecto <svg class="lucide"><use href="#icon-arrow-diag"></use></svg></a>
+        <a class="btn-ghost" href="#servicios-turismo">Ver soluciones <svg class="lucide"><use href="#icon-arrow-down"></use></svg></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec alt" id="dolor">
+    <div class="wrap">
+      <div class="shead">
+        <div class="snum"><span class="ln"></span>El desafío</div>
+        <h2 class="stitle">Un destino inolvidable<br>merece <span class="g">contarse bien.</span></h2>
+        <p class="sdesc">No basta con tener un destino extraordinario: hay que lograr que se vea, se sienta y se recuerde. Traducimos la experiencia real de tu lugar en un relato audiovisual que despierta el deseo de viajar, genera confianza y convierte esa inspiración en reservas concretas.</p>
+      </div>
+      <div class="pain-grid">
+        <div class="pain">
+          <div class="pain-ico"><svg class="lucide"><use href="#icon-calendar"></use></svg></div>
+          <h3>Demanda todo el año</h3>
+          <p>Cuando tu destino solo aparece en temporada alta, el resto del año trabaja en contra. Construimos una presencia audiovisual constante que mantiene tu lugar deseado en cada estación.</p>
+        </div>
+        <div class="pain">
+          <div class="pain-ico"><svg class="lucide"><use href="#icon-calendar"></use></svg></div>
+          <h3>Reserva directa</h3>
+          <p>Cada reserva vía intermediarios se lleva tu margen. Creamos piezas y campañas que llevan al viajero a reservar contigo, reduciendo comisiones y tu costo de adquisición.</p>
+        </div>
+        <div class="pain">
+          <div class="pain-ico"><svg class="lucide"><use href="#icon-globe"></use></svg></div>
+          <h3>Viajero internacional</h3>
+          <p>El turista que buscas decide desde otro idioma y otra cultura. Adaptamos y subtitulamos tu historia para que cruce fronteras y conecte con tu mercado sin perder su esencia.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="servicios-turismo">
+    <div class="wrap">
+      <div class="shead">
+        <div class="snum"><span class="ln"></span>Qué hacemos para ti</div>
+        <h2 class="stitle">Contenidos que <span class="g">Inspiran viajes</span></h2>
+        <p class="sdesc">Desde la pieza que capta la atención en segundos hasta la campaña que llena tu temporada: cada contenido acompaña al viajero en su decisión, del primer sueño a la reserva confirmada.</p>
+      </div>
+      <ul class="svc-list">
+        <li><span class="ico"><svg class="lucide"><use href="#icon-film"></use></svg></span><div><h4>Video de destinos</h4><p>Microdocumentales y reels cinematográficos que hacen sentir la experiencia antes de llegar.</p></div></li>
+        <li><span class="ico"><svg class="lucide"><use href="#icon-wine"></use></svg></span><div><h4>Enoturismo y experiencias</h4><p>Relatos de viñas, gastronomía y naturaleza que elevan el valor percibido de tu propuesta.</p></div></li>
+        <li><span class="ico"><svg class="lucide"><use href="#icon-target"></use></svg></span><div><h4>Pauta segmentada</h4><p>Campañas en Meta, Google y YouTube dirigidas por origen, intereses y temporada de viaje.</p></div></li>
+        <li><span class="ico"><svg class="lucide"><use href="#icon-news"></use></svg></span><div><h4>Gestión de medios</h4><p>Presencia en prensa y plataformas turísticas para amplificar el alcance de tu destino.</p></div></li>
+        <li><span class="ico"><svg class="lucide"><use href="#icon-globe"></use></svg></span><div><h4>Subtitulado internacional</h4><p>Versiones multilenguaje listas para mercados de alto valor y ferias internacionales.</p></div></li>
+        <li><span class="ico"><svg class="lucide"><use href="#icon-calendar"></use></svg></span><div><h4>Embudo a reserva</h4><p>Del descubrimiento a la reserva directa, con métricas claras de conversión por campaña.</p></div></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec" id="portafolio-turismo">
+    <div class="wrap">
+      <div class="shead">
+        <div class="snum"><span class="ln"></span>Portafolio</div>
+        <h2 class="stitle">Destinos <span class="g">contados en pantalla</span></h2>
+        <p class="sdesc">Una muestra de piezas producidas para turismo y hospitalidad en el centro-sur de Chile.</p>
+      </div>
+      <div class="video-grid">
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/MRRr-tuuY48" title="LUNA - Portafolio Turismo 1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/nEDFc3iplAk" title="LUNA - Portafolio Turismo 2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec alt" id="evidencia-turismo">
+    <div class="wrap">
+      <div class="shead" style="max-width:820px; margin-left:auto; margin-right:auto; text-align:center;">
+        <div class="snum" style="justify-content:center;"><span class="ln"></span>Evidencia<span class="ln"></span></div>
+        <h2 class="stitle">Destinos que <span class="g">ya confían</span></h2>
+        <p class="sdesc" style="margin-left:auto; margin-right:auto;">Instituciones y organismos de turismo del centro-sur de Chile ya confían en nosotros para posicionar sus destinos.</p>
+      </div>
+      <div class="ev-carousel-wrap">
+        <div class="ev-carousel-track">
+          <img src="clientlogos/12_sernatur.png" alt="Sernatur" class="logo-c">
+          <img src="clientlogos/07_gore_nuble.png" alt="Gobierno Regional de Ñuble" class="logo-c">
+          <img src="clientlogos/04_contur.png" alt="CONTUR Biobío" class="logo-c">
+          <img src="clientlogos/06_corparauco.png" alt="Corparauco" class="logo-c">
+          <img src="clientlogos/14_parque.png" alt="Parque Museo Pedro del Río Zañartu" class="logo-c">
+          <img src="clientlogos/11_gore_biobio.png" alt="Gobierno Regional del Biobío" class="logo-c">
+          <img src="clientlogos/05_esquerre.png" alt="Esquerré" class="logo-c">
+          <img src="clientlogos/12_sernatur.png" alt="Sernatur" class="logo-c">
+          <img src="clientlogos/07_gore_nuble.png" alt="Gobierno Regional de Ñuble" class="logo-c">
+          <img src="clientlogos/04_contur.png" alt="CONTUR Biobío" class="logo-c">
+        </div>
+      </div>
+      <div class="plan-note" style="max-width:820px; margin-left:auto; margin-right:auto; justify-content:center; text-align:center;">
+        <p>Mismo método, misma calidad. Una campaña de temporada puede ser un Plan <b>Esencial</b>; la gestión continua de un destino, un Plan <b>Contenidos</b> o <b>360°</b>. La estructura modular se ajusta a tu proyecto.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <h2>Hagamos que tu destino sea imposible de ignorar.</h2>
+    <p>Cuéntanos tu temporada, tu mercado y tu meta. Te proponemos un plan a tu medida.</p>
+    <a class="btn-dark" href="#contacto-turismo">Iniciar mi proyecto de turismo <svg class="lucide"><use href="#icon-arrow-right"></use></svg></a>
+  </section>
+
+  <section class="sec" id="contacto-turismo">
+    <div class="wrap">
+      <div class="shead" style="max-width:640px; margin-left:auto; margin-right:auto; text-align:center;">
+        <div class="snum" style="justify-content:center;"><span class="ln"></span>Contacto<span class="ln"></span></div>
+        <h2 class="stitle">Hablemos de tu <span class="g">destino</span></h2>
+        <p class="sdesc" style="margin-left:auto; margin-right:auto;">Déjanos tus datos y un resumen de tu proyecto. Te contactaremos para agendar una reunión de diagnóstico.</p>
+      </div>
+      <form class="contact-form" action="https://formsubmit.co/ajax/info@lunacreativa.cl" method="POST" id="turismo-form">
+        <input type="text" name="_honey" style="display:none">
+        <input type="hidden" name="_subject" value="Nuevo Lead: Turismo y Hospitalidad — LUNA">
+        <input type="hidden" name="_next" value="https://lunacreativa.cl/gracias">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="Sector" value="Turismo y Hospitalidad">
+        <div class="c-field">
+          <label class="c-label">Nombre o Empresa</label>
+          <input type="text" name="Nombre_Empresa" class="c-input" required placeholder="Ej. tu empresa">
+        </div>
+        <div class="c-field">
+          <label class="c-label">Correo Electrónico</label>
+          <input type="email" name="Email" class="c-input" required placeholder="tu@correo.com">
+        </div>
+        <div class="c-field">
+          <label class="c-label">Tipo de Servicio de Interés</label>
+          <select name="Servicio_Interes" class="c-select" required>
+            <option value="" disabled selected>Selecciona una opción...</option>
+            <optgroup label="Planes">
+              <option value="esencial">Plan Esencial</option>
+              <option value="contenidos">Plan Contenidos</option>
+              <option value="360">Plan 360°</option>
+              <option value="broadcast">Plan Broadcast</option>
+            </optgroup>
+            <optgroup label="Turismo y Hospitalidad">
+              <option value="video-destinos">Video de Destinos</option>
+              <option value="enoturismo">Enoturismo y Experiencias</option>
+              <option value="pauta-segmentada">Pauta Segmentada</option>
+              <option value="gestion-medios">Gestión de Medios</option>
+              <option value="subtitulado">Subtitulado Internacional</option>
+              <option value="embudo-reserva">Embudo a Reserva</option>
+            </optgroup>
+            <option value="otro">Otro Requerimiento / Proyecto a Medida</option>
+          </select>
+        </div>
+        <div class="c-field">
+          <label class="c-label">Mensaje</label>
+          <textarea name="Mensaje" class="c-textarea" required placeholder="Cuéntanos brevemente sobre tu destino y tus objetivos..."></textarea>
+        </div>
+        <button type="submit" class="c-submit">Enviar Mensaje</button>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <div class="foot">
+      <div class="foot-l">
+        <img src="luna_icon.png" alt="LUNA">
+        <span><b>LUNA</b> Comunicación Creativa<br>Concepción — Región del Biobío, Chile</span>
+      </div>
+      <div class="foot-nav">
+        <a onclick="switchView('home')">Home</a>
+        <a onclick="switchView('home'); setTimeout(() => window.location.hash = '#tarifas', 100)">Planes</a>
+        <a href="#contacto-turismo">Contacto</a>
+      </div>
+    </div>
+  </footer>
+</div>
 
 <script>
-/* ── CARRUSEL INFINITO DE LOGOS (EFECTO BUCLE CONTINUO) ── */
-document.addEventListener('DOMContentLoaded', () => {
-  const track = document.getElementById('track');
-  if (track) {
-    const clone = track.innerHTML;
-    track.innerHTML += clone; // Duplica los logos en memoria para un scroll fluido sin saltos
-  }
-});
+// Sistema SPA - Intercambiador Dinámico de Pantallas
+function switchView(viewId) {
+  // Ocultar todas las vistas
+  document.querySelectorAll('.page-view').forEach(view => {
+    view.classList.remove('active');
+  });
 
-/* ── VINCULACIÓN DE BOTONES DE PLANES CON SELECTOR DE CONTACTO ── */
-function selectService(value) {
-  const selector = document.getElementById('service-selector');
-  if (selector) selector.value = value;
+  // Mostrar la vista objetivo
+  const targetView = document.getElementById('view-' + viewId);
+  if (targetView) {
+    targetView.classList.add('active');
+    // Forzar scroll arriba instantáneo al cambiar de vista
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }
+
+  // Modificar títulos dinámicamente según la vertical activa
+  if (viewId === 'home') {
+    document.title = "LUNA Comunicación Creativa";
+  } else if (viewId === 'industria') {
+    document.title = "Video Inductivo y SSO para Empresas | LUNA Comunicación Creativa";
+  } else if (viewId === 'turismo') {
+    document.title = "Video y Marketing para Turismo en Chile | LUNA Comunicación Creativa";
+  }
 }
 
-/* ── PROCESAMIENTO ASÍNCRONO AJAX (ENVÍO DE FORMULARIO SIN REDIRECCIÓN) ── */
-const contactForm = document.getElementById('main-contact-form');
-if (contactForm) {
-  contactForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const form = e.target;
-    const btn = document.getElementById('submit-btn') || form.querySelector('button[type="submit"]');
-    const toast = document.getElementById('toast');
-    
-    // Deshabilitar temporalmente el botón
-    if (btn) {
-      btn.disabled = true;
-      btn.textContent = 'Enviando...';
-    }
+// Lógica Interactiva para la sección Método Luna (Línea de tiempo)
+document.querySelectorAll('#view-home .tstep').forEach((step, index, stepsArray) => {
+  step.addEventListener('click', () => {
+    stepsArray.forEach((s, idx) => {
+      if (idx <= index) {
+        s.classList.add('done');
+        s.classList.remove('active');
+      } else {
+        s.classList.remove('done', 'active');
+      }
+    });
+    step.classList.add('active');
+  });
+});
 
+// Enrutamiento AJAX optimizado para Formularios con alertas personalizadas (Toast)
+const toast = document.getElementById('toast');
+function showToast(msg, isError = false) {
+  toast.innerText = msg;
+  if (isError) {
+    toast.style.background = '#ea4335';
+    toast.style.borderColor = '#ea4335';
+    toast.style.color = '#ffffff';
+  } else {
+    toast.style.background = 'rgba(201,168,76,0.9)';
+    toast.style.borderColor = '#c9a84c';
+    toast.style.color = '#070707';
+  }
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 4000);
+}
+
+// Listener Unificado para Envíos Asíncronos sin recarga de página
+document.querySelectorAll('form').forEach(form => {
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const btn = form.querySelector('button[type="submit"]');
+    btn.disabled = true;
+    
     fetch(form.action, {
       method: 'POST',
       body: new FormData(form),
@@ -915,52 +1355,16 @@ if (contactForm) {
     })
     .then(response => {
       if (response.ok) {
-        if (toast) {
-          toast.textContent = '✓ Mensaje enviado. El equipo de LUNA te contactará pronto.';
-          toast.classList.remove('error');
-          toast.classList.add('show');
-        }
-        form.reset(); // Limpia los campos del formulario
+        showToast('¡Mensaje enviado con éxito! Te contactaremos pronto.');
+        form.reset();
       } else {
-        throw new Error('Error en la respuesta del servidor.');
+        showToast('Hubo un problema. Por favor, inténtalo de nuevo.', true);
       }
     })
-    .catch(error => {
-      if (toast) {
-        toast.textContent = '✕ Error al enviar el mensaje. Inténtalo de nuevo.';
-        toast.classList.add('show', 'error');
-      }
-    })
-    .finally(() => {
-      if (btn) {
-        btn.disabled = false;
-        btn.textContent = 'Enviar Mensaje';
-      }
-      // Ocultar notificación tras unos segundos
-      if (toast) {
-        setTimeout(() => toast.classList.remove('show', 'error'), 4500);
-      }
-    });
+    .catch(() => showToast('Error de conexión. Inténtalo más tarde.', true))
+    .finally(() => btn.disabled = false);
   });
-}
-
-/* ── PASOS INTERACTIVOS (MÉTODO LUNA) ── */
-const PASO_DETAILS = [
-  "<strong>01. Descubrir:</strong> Escuchamos a fondo para entender el ADN, los valores y el propósito real de tu organización.",
-  "<strong>02. Identificar:</strong> Definimos con claridad el mensaje y la audiencia que darán sentido a cada pieza.",
-  "<strong>03. Elaborar:</strong> Producimos contenido audiovisual de calidad cinematográfica, cuidando cada detalle del relato.",
-  "<strong>04. Implementar:</strong> Llevamos cada pieza al canal correcto para que llegue a las personas indicadas.",
-  "<strong>05. Medir:</strong> Analizamos resultados y optimizamos, porque nos comprometemos con el impacto real de tu inversión."
-];
-
-function selectPaso(i) {
-  document.querySelectorAll('.tstep').forEach((s, j) => {
-    s.classList.toggle('active', j === i);
-    s.classList.toggle('done', j < i);
-  });
-  const detailTxt = document.getElementById('proc-detail-txt');
-  if (detailTxt) detailTxt.innerHTML = PASO_DETAILS[i];
-}
+});
 </script>
 
 </body>
