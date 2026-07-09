@@ -1009,7 +1009,7 @@ footer { padding: 54px 40px; border-top: 1px solid rgba(201,168,76,0.15); backgr
         </div>
       </div>
       <div class="plan-note" style="max-width:860px; margin-left:auto; margin-right:auto; justify-content:center; text-align:center;">
-        <p>Mismo método, misma calidad. Un <b>video inductivo</b> puede resolverse como Plan <b>Esencial</b>; un <b>programa SSO anual</b> con actualizaciones encaja en un Plan <b>Contenidos</b> o <b>360°</b>. La estructura modular se ajusta a tu operación.</p>
+        <p>Mismo método, misma calidad. Un <b>video inductivo</b> puede resolverse como Plan <b>Esencial</b>; un <b>programa SSO anual</b> con actualizaciones encaja en un Plan <b>Contenidos</b> o <b>360°</b>. La estructura modular se ajusta a tu operation.</p>
       </div>
     </div>
   </section>
@@ -1341,17 +1341,27 @@ function showToast(msg, isError = false) {
   setTimeout(() => toast.classList.remove('show'), 4000);
 }
 
-// Listener Unificado para Envíos Asíncronos sin recarga de página
+// Listener Unificado para Envíos Asíncronos sin bloqueo de CORS (JSON Parser)
 document.querySelectorAll('form').forEach(form => {
   form.addEventListener('submit', function(e) {
     e.preventDefault();
     const btn = form.querySelector('button[type="submit"]');
     btn.disabled = true;
     
+    // Convertimos los campos del FormData a un objeto clave-valor plano
+    const formData = new FormData(form);
+    const formEntries = Object.fromEntries(formData.entries());
+    
+    // Serializamos el payload a una cadena JSON estricta
+    const jsonPayload = JSON.stringify(formEntries);
+    
     fetch(form.action, {
       method: 'POST',
-      body: new FormData(form),
-      headers: { 'Accept': 'application/json' }
+      headers: { 
+        'Content-Type': 'application/json',
+        'Accept': 'application/json' 
+      },
+      body: jsonPayload
     })
     .then(response => {
       if (response.ok) {
@@ -1361,7 +1371,10 @@ document.querySelectorAll('form').forEach(form => {
         showToast('Hubo un problema. Por favor, inténtalo de nuevo.', true);
       }
     })
-    .catch(() => showToast('Error de conexión. Inténtalo más tarde.', true))
+    .catch((err) => {
+      console.error("FormSubmit Fetch Error: ", err);
+      showToast('Error de conexión o validación de origen.', true);
+    })
     .finally(() => btn.disabled = false);
   });
 });
