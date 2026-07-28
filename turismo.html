@@ -13,12 +13,13 @@
 <meta property="og:url" content="https://lunacreativa.cl/turismo">
 <link rel="icon" href="luna_icon.png" sizes="any">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 :root { --gold: #c9a84c; --black: #070707; --white: #fff; --gray: #888; }
 html { scroll-behavior: smooth; }
 body { background: var(--black); font-family: 'Montserrat', sans-serif; color: var(--white); overflow-x: hidden; }
-.lucide { stroke-width: 1.6; width: 20px; height: 20px; display: inline-block; vertical-align: middle; flex: none; }
+.lucide { stroke-width: 1.6; }
 a { text-decoration: none; }
 
 /* header */
@@ -40,6 +41,46 @@ nav a.back .lucide { width: 15px; height: 15px; }
 nav a.cta { color: var(--gold); border: 1px solid rgba(201,168,76,0.5); border-radius: 100px; padding: 9px 18px; transition: background .25s, color .25s; }
 nav a.cta:hover { background: var(--gold); color: var(--black); }
 @media (max-width: 900px) { nav .nlink { display: none; } }
+
+/* ── MENÚ HAMBURGUESA (móvil) ── */
+.nav-burger {
+  display: none; flex-direction: column; justify-content: center; gap: 5px;
+  width: 42px; height: 42px; cursor: pointer; flex: none; z-index: 650;
+  background: none; border: none; padding: 0;
+}
+.nav-burger span { display: block; width: 24px; height: 2px; background: var(--white); margin: 0 auto; transition: transform .25s, opacity .25s; }
+.mobile-menu {
+  position: fixed; inset: 0; z-index: 700; background: var(--black);
+  transform: translateY(-100%);
+  display: flex; flex-direction: column; overflow-y: auto;
+}
+.mobile-menu.mm-tur.open { transform: translateY(0); }
+header.menu-open .nav-burger span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+header.menu-open .nav-burger span:nth-child(2) { opacity: 0; }
+header.menu-open .nav-burger span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+.mm-top {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 24px; background: var(--black); border-bottom: 1px solid rgba(201,168,76,0.3);
+  flex: none;
+}
+.mm-brand { display: flex; align-items: center; gap: 12px; }
+.mm-dot { color: var(--black); }
+.mm-close { font-size: 26px; line-height: 1; color: var(--white); cursor: pointer; background: none; border: none; padding: 6px; }
+.mm-links { list-style: none; padding: 10px 24px 0; flex: 1; }
+.mm-links li { border-bottom: 1px solid rgba(255,255,255,0.12); }
+.mm-links a {
+  display: block; padding: 22px 0; font-family: 'Montserrat', sans-serif;
+  font-weight: 700; font-size: 26px; color: var(--gold); text-decoration: none;
+}
+.mm-cta {
+  margin: 24px; padding: 18px; text-align: center; border-radius: 100px;
+  background: var(--gold); color: var(--black); font-weight: 700; font-size: 17px;
+  text-decoration: none; flex: none;
+}
+@media (max-width: 1140px) {
+  nav { display: none; }
+  .nav-burger { display: flex; }
+}
 
 /* hero */
 .lhero { position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 130px 40px 80px; overflow: hidden; }
@@ -159,50 +200,6 @@ footer { padding: 54px 40px; border-top: 1px solid rgba(201,168,76,0.15); }
 </style>
 </head>
 <body>
-<svg style="display:none" aria-hidden="true">
-<defs>
-<symbol id="icon-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/></symbol>
-<symbol id="icon-arrow-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><line x1="20" y1="12" x2="5" y2="12"/><polyline points="11 18 5 12 11 6"/></symbol>
-<symbol id="icon-arrow-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="4" x2="12" y2="19"/><polyline points="6 13 12 19 18 13"/></symbol>
-<symbol id="icon-arrow-diag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="18" x2="18" y2="6"/><polyline points="9 6 18 6 18 15"/></symbol>
-<symbol id="icon-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="20" x2="20" y2="20"/><rect x="6" y="12" width="3" height="8"/><rect x="11" y="7" width="3" height="13"/><rect x="16" y="3" width="3" height="17"/></symbol>
-<symbol id="icon-building" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18"/><line x1="9" y1="7" x2="9" y2="7.1"/><line x1="15" y1="7" x2="15" y2="7.1"/><line x1="9" y1="12" x2="9" y2="12.1"/><line x1="15" y1="12" x2="15" y2="12.1"/><line x1="10" y1="21" x2="10" y2="17" /><line x1="14" y1="21" x2="14" y2="17"/></symbol>
-<symbol id="icon-film" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="1.5"/><polygon points="10 9 16 12 10 15 10 9"/></symbol>
-<symbol id="icon-compass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polygon points="15 9 13 13 9 15 11 11 15 9"/></symbol>
-<symbol id="icon-door" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21V5a2 2 0 0 1 2-2h5v18"/><line x1="4" y1="21" x2="20" y2="21"/><line x1="13" y1="12" x2="13" y2="12.1"/></symbol>
-<symbol id="icon-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></symbol>
-<symbol id="icon-glasses" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="6.5" cy="14" r="3.2"/><circle cx="17.5" cy="14" r="3.2"/><path d="M9.7 14h4.6M2.5 12L4 6h2M21.5 12L20 6h-2"/></symbol>
-<symbol id="icon-grad" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9l10-5 10 5-10 5-10-5z"/><path d="M6 11v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/></symbol>
-<symbol id="icon-hardhat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15a8 8 0 0 1 16 0z"/><line x1="2" y1="15" x2="22" y2="15"/><line x1="12" y1="6" x2="12" y2="9"/></symbol>
-<symbol id="icon-layers" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 3 21 8 12 13 3 8 12 3"/><polyline points="3 13 12 18 21 13"/></symbol>
-<symbol id="icon-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="1.5"/><polyline points="3 6 12 13 21 6"/></symbol>
-<symbol id="icon-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.3 7-11.5A7 7 0 0 0 5 9.5C5 14.7 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.4"/></symbol>
-<symbol id="icon-megaphone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11v2a2 2 0 0 0 2 2h1l2 6h2l-1-6h6l6 4V5l-6 4H6a2 2 0 0 0-2 2z"/></symbol>
-<symbol id="icon-mic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="9" y1="22" x2="15" y2="22"/></symbol>
-<symbol id="icon-mountain" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20l6-11 4 6 2-3 6 8H3z"/><circle cx="18" cy="6" r="2"/></symbol>
-<symbol id="icon-orbit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><ellipse cx="12" cy="12" rx="9" ry="4"/><circle cx="21" cy="12" r="1.4"/></symbol>
-<symbol id="icon-radio" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.2"/><path d="M8.5 8.5a5 5 0 0 0 0 7M15.5 8.5a5 5 0 0 1 0 7M5.5 5.5a9.5 9.5 0 0 0 0 13M18.5 5.5a9.5 9.5 0 0 1 0 13"/></symbol>
-<symbol id="icon-rocket" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c3 2 5 6 5 10 0 2-1 4-2 5l-3 3-3-3c-1-1-2-3-2-5 0-4 2-8 5-10z"/><circle cx="12" cy="10" r="1.6"/><path d="M9 16l-3 3M15 16l3 3"/></symbol>
-<symbol id="icon-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="6.5"/><line x1="20" y1="20" x2="15.3" y2="15.3"/></symbol>
-<symbol id="icon-send" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><line x1="21" y1="3" x2="10" y2="14"/><polygon points="21 3 14 21 10 14 3 10 21 3"/></symbol>
-<symbol id="icon-share" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="12" r="2.2"/><circle cx="18" cy="6" r="2.2"/><circle cx="18" cy="18" r="2.2"/><line x1="8" y1="11" x2="16" y2="7"/><line x1="8" y1="13" x2="16" y2="17"/></symbol>
-<symbol id="icon-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><polyline points="9 12 11 14 15 9.5"/></symbol>
-<symbol id="icon-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2"/><line x1="10" y1="19" x2="14" y2="19"/></symbol>
-<symbol id="icon-spark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 5.6L19 10l-5.2 1.4L12 17l-1.8-5.6L5 10l5.2-1.4L12 3z"/></symbol>
-<symbol id="icon-target" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></symbol>
-<symbol id="icon-trend" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 17 9 11 13 15 21 6"/><polyline points="15 6 21 6 21 12"/></symbol>
-<symbol id="icon-wallet" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 9h18"/><circle cx="16.5" cy="14" r="1.3"/></symbol>
-<symbol id="icon-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h9a3 3 0 0 1 3 3v13H7a3 3 0 0 1-3-3z"/><path d="M20 4h-4v13"/><polyline points="9 11 11 13 15 8"/></symbol>
-<symbol id="icon-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="3" x2="8" y2="7"/><line x1="16" y1="3" x2="16" y2="7"/><polyline points="8.5 15 10.5 17 15 13"/></symbol>
-<symbol id="icon-clipboard" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="12" height="17" rx="2"/><rect x="9" y="2" width="6" height="3.5" rx="1"/><polyline points="9 13 11 15 15 10.5"/></symbol>
-<symbol id="icon-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="3" y1="12" x2="21" y2="12"/><path d="M12 3a15 15 0 0 1 0 18a15 15 0 0 1 0-18z"/></symbol>
-<symbol id="icon-list" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><line x1="9" y1="7" x2="20" y2="7"/><line x1="9" y1="12" x2="20" y2="12"/><line x1="9" y1="17" x2="20" y2="17"/><polyline points="3 6.5 4 7.5 5.5 5.5"/><polyline points="3 11.5 4 12.5 5.5 10.5"/><polyline points="3 16.5 4 17.5 5.5 15.5"/></symbol>
-<symbol id="icon-news" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="14" height="16" rx="1.5"/><line x1="6.5" y1="8" x2="13.5" y2="8"/><line x1="6.5" y1="11" x2="13.5" y2="11"/><line x1="6.5" y1="14" x2="10" y2="14"/><path d="M17 8h2a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2"/></symbol>
-<symbol id="icon-palmtree" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V11"/><path d="M12 11c-2-4-6-5-9-4 1 3 4 5 9 4z"/><path d="M12 11c2-4 6-5 9-4-1 3-4 5-9 4z"/><path d="M12 11c-1-3 0-6 2-8"/></symbol>
-<symbol id="icon-scale" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="3" x2="12" y2="21"/><path d="M5 21h14"/><path d="M12 6l-5 3 2.5 6h5L12 9z"/><path d="M12 6l5 3-2.5 6"/></symbol>
-<symbol id="icon-wine" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3h8l-1 8a3 3 0 0 1-6 0z"/><line x1="12" y1="14" x2="12" y2="21"/><line x1="8" y1="21" x2="16" y2="21"/></symbol>
-</defs>
-</svg>
 
 <template id="__bundler_thumbnail" data-bg-color="#070707">
   <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
@@ -212,7 +209,7 @@ footer { padding: 54px 40px; border-top: 1px solid rgba(201,168,76,0.15); }
   </svg>
 </template>
 
-<header>
+<header id="site-header">
   <div class="hc">
     <div class="logo-container">
       <a href="index.html">
@@ -225,23 +222,45 @@ footer { padding: 54px 40px; border-top: 1px solid rgba(201,168,76,0.15); }
     </div>
     <nav>
       <ul>
-        <li><a class="back nlink" href="index.html"><svg class="lucide"><use href="#icon-arrow-left"></use></svg>Home</a></li>
+        <li><a class="back nlink" href="index.html"><i data-lucide="arrow-left"></i>Home</a></li>
         <li><a class="cta" href="#contacto-turismo">Cotiza tu proyecto</a></li>
       </ul>
     </nav>
+    <button type="button" class="nav-burger" aria-label="Abrir menú" onclick="document.getElementById('mobile-menu-tur').style.transform='translateY(0)'; document.getElementById('site-header').classList.add('menu-open');">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </header>
+<div class="mobile-menu mm-tur" id="mobile-menu-tur">
+  <div class="mm-top">
+    <span class="mm-brand">
+      <img src="luna_icon.png" alt="" class="brand-icon">
+      <span class="brand-text">
+        <span class="brand-name">LUNA</span>
+        <span class="brand-tag">Comunicación <span class="creativa">Creativa</span></span>
+      </span>
+    </span>
+    <button type="button" class="mm-close" aria-label="Cerrar menú" onclick="document.getElementById('mobile-menu-tur').style.transform='translateY(-100%)'; document.getElementById('site-header').classList.remove('menu-open');">✕</button>
+  </div>
+  <ul class="mm-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="#dolor" onclick="document.getElementById('mobile-menu-tur').style.transform='translateY(-100%)'; document.getElementById('site-header').classList.remove('menu-open');">El desafío</a></li>
+    <li><a href="#servicios-turismo" onclick="document.getElementById('mobile-menu-tur').style.transform='translateY(-100%)'; document.getElementById('site-header').classList.remove('menu-open');">Qué hacemos</a></li>
+    <li><a href="#evidencia-turismo" onclick="document.getElementById('mobile-menu-tur').style.transform='translateY(-100%)'; document.getElementById('site-header').classList.remove('menu-open');">Evidencia</a></li>
+  </ul>
+  <a href="#contacto-turismo" class="mm-cta" onclick="document.getElementById('mobile-menu-tur').style.transform='translateY(-100%)'; document.getElementById('site-header').classList.remove('menu-open');">Cotiza tu proyecto</a>
+</div>
 
 <!-- HERO -->
 <section class="lhero">
   <img src="luna_icon.png" alt="" class="lhero-mark">
   <div class="lhero-inner">
-    <span class="vbadge"><svg class="lucide"><use href="#icon-palmtree"></use></svg>Turismo y Hospitalidad</span>
+    <span class="vbadge"><i data-lucide="palmtree"></i>Turismo y Hospitalidad</span>
     <h1>Llena tu temporada. <span class="g">Todo el año.</span></h1>
     <p class="lead">Tu destino merece brillar los doce meses del año. Producimos contenido audiovisual que inspira viajes, posiciona tu destino y convierte audiencias en reservas directas.</p>
     <div class="lhero-actions">
-      <a class="btn-primary" href="#contacto-turismo">Cotiza tu proyecto <svg class="lucide"><use href="#icon-arrow-diag"></use></svg></a>
-      <a class="btn-ghost" href="#servicios-turismo">Ver soluciones <svg class="lucide"><use href="#icon-arrow-down"></use></svg></a>
+      <a class="btn-primary" href="#contacto-turismo">Cotiza tu proyecto <i data-lucide="arrow-up-right"></i></a>
+      <a class="btn-ghost" href="#servicios-turismo">Ver soluciones <i data-lucide="arrow-down"></i></a>
     </div>
   </div>
 </section>
@@ -256,17 +275,17 @@ footer { padding: 54px 40px; border-top: 1px solid rgba(201,168,76,0.15); }
     </div>
     <div class="pain-grid">
       <div class="pain">
-        <div class="pain-ico"><svg class="lucide"><use href="#icon-calendar"></use></svg></div>
+        <div class="pain-ico"><i data-lucide="calendar-sync"></i></div>
         <h3>Demanda todo el año</h3>
         <p>Cuando tu destino solo aparece en temporada alta, el resto del año trabaja en contra. Construimos una presencia audiovisual constante que mantiene tu lugar deseado en cada estación.</p>
       </div>
       <div class="pain">
-        <div class="pain-ico"><svg class="lucide"><use href="#icon-calendar"></use></svg></div>
+        <div class="pain-ico"><i data-lucide="calendar-check"></i></div>
         <h3>Reserva directa</h3>
         <p>Cada reserva vía intermediarios se lleva tu margen. Creamos piezas y campañas que llevan al viajero a reservar contigo, reduciendo comisiones y tu costo de adquisición.</p>
       </div>
       <div class="pain">
-        <div class="pain-ico"><svg class="lucide"><use href="#icon-globe"></use></svg></div>
+        <div class="pain-ico"><i data-lucide="languages"></i></div>
         <h3>Viajero internacional</h3>
         <p>El turista que buscas decide desde otro idioma y otra cultura. Adaptamos y subtitulamos tu historia para que cruce fronteras y conecte con tu mercado sin perder su esencia.</p>
       </div>
@@ -283,12 +302,12 @@ footer { padding: 54px 40px; border-top: 1px solid rgba(201,168,76,0.15); }
       <p class="sdesc">Desde la pieza que capta la atención en segundos hasta la campaña que llena tu temporada: cada contenido acompaña al viajero en su decisión, del primer sueño a la reserva confirmada.</p>
     </div>
     <ul class="svc-list">
-      <li><span class="ico"><svg class="lucide"><use href="#icon-film"></use></svg></span><div><h4>Video de destinos</h4><p>Microdocumentales y reels cinematográficos que hacen sentir la experiencia antes de llegar.</p></div></li>
-      <li><span class="ico"><svg class="lucide"><use href="#icon-wine"></use></svg></span><div><h4>Enoturismo y experiencias</h4><p>Relatos de viñas, gastronomía y naturaleza que elevan el valor percibido de tu propuesta.</p></div></li>
-      <li><span class="ico"><svg class="lucide"><use href="#icon-target"></use></svg></span><div><h4>Pauta segmentada</h4><p>Campañas en Meta, Google y YouTube dirigidas por origen, intereses y temporada de viaje.</p></div></li>
-      <li><span class="ico"><svg class="lucide"><use href="#icon-news"></use></svg></span><div><h4>Gestión de medios</h4><p>Presencia en prensa y plataformas turísticas para amplificar el alcance de tu destino.</p></div></li>
-      <li><span class="ico"><svg class="lucide"><use href="#icon-globe"></use></svg></span><div><h4>Subtitulado internacional</h4><p>Versiones multilenguaje listas para mercados de alto valor y ferias internacionales.</p></div></li>
-      <li><span class="ico"><svg class="lucide"><use href="#icon-calendar"></use></svg></span><div><h4>Embudo a reserva</h4><p>Del descubrimiento a la reserva directa, con métricas claras de conversión por campaña.</p></div></li>
+      <li><span class="ico"><i data-lucide="clapperboard"></i></span><div><h4>Video de destinos</h4><p>Microdocumentales y reels cinematográficos que hacen sentir la experiencia antes de llegar.</p></div></li>
+      <li><span class="ico"><i data-lucide="wine"></i></span><div><h4>Enoturismo y experiencias</h4><p>Relatos de viñas, gastronomía y naturaleza que elevan el valor percibido de tu propuesta.</p></div></li>
+      <li><span class="ico"><i data-lucide="target"></i></span><div><h4>Pauta segmentada</h4><p>Campañas en Meta, Google y YouTube dirigidas por origen, intereses y temporada de viaje.</p></div></li>
+      <li><span class="ico"><i data-lucide="newspaper"></i></span><div><h4>Gestión de medios</h4><p>Presencia en prensa y plataformas turísticas para amplificar el alcance de tu destino.</p></div></li>
+      <li><span class="ico"><i data-lucide="languages"></i></span><div><h4>Subtitulado internacional</h4><p>Versiones multilenguaje listas para mercados de alto valor y ferias internacionales.</p></div></li>
+      <li><span class="ico"><i data-lucide="calendar-check"></i></span><div><h4>Embudo a reserva</h4><p>Del descubrimiento a la reserva directa, con métricas claras de conversión por campaña.</p></div></li>
     </ul>
   </div>
 </section>
@@ -321,15 +340,7 @@ footer { padding: 54px 40px; border-top: 1px solid rgba(201,168,76,0.15); }
       <p class="sdesc" style="margin-left:auto; margin-right:auto;">Instituciones y organismos de turismo del centro-sur de Chile ya confían en nosotros para posicionar sus destinos.</p>
     </div>
     <div class="ev-carousel-wrap">
-      <div class="ev-carousel-track">
-        <img src="clientlogos/12_sernatur.png" alt="Sernatur" class="logo-c">
-        <img src="clientlogos/07_gore_nuble.png" alt="Gobierno Regional de Ñuble" class="logo-c">
-        <img src="clientlogos/04_contur.png" alt="CONTUR Biobío" class="logo-c">
-        <img src="clientlogos/06_corparauco.png" alt="Corparauco" class="logo-c">
-        <img src="clientlogos/14_parque.png" alt="Parque Museo Pedro del Río Zañartu" class="logo-c">
-        <img src="clientlogos/11_gore_biobio.png" alt="Gobierno Regional del Biobío" class="logo-c">
-        <img src="clientlogos/05_esquerre.png" alt="Esquerré" class="logo-c">
-      
+      <div class="ev-carousel-track" id="ev-track-turismo">
         <img src="clientlogos/12_sernatur.png" alt="Sernatur" class="logo-c">
         <img src="clientlogos/07_gore_nuble.png" alt="Gobierno Regional de Ñuble" class="logo-c">
         <img src="clientlogos/04_contur.png" alt="CONTUR Biobío" class="logo-c">
@@ -349,7 +360,7 @@ footer { padding: 54px 40px; border-top: 1px solid rgba(201,168,76,0.15); }
 <section class="cta-band">
   <h2>Hagamos que tu destino sea imposible de ignorar.</h2>
   <p>Cuéntanos tu temporada, tu mercado y tu meta. Te proponemos un plan a tu medida.</p>
-  <a class="btn-dark" href="#contacto-turismo">Iniciar mi proyecto de turismo <svg class="lucide"><use href="#icon-arrow-right"></use></svg></a>
+  <a class="btn-dark" href="#contacto-turismo">Iniciar mi proyecto de turismo <i data-lucide="arrow-right"></i></a>
 </section>
 
 <!-- CONTACTO -->
@@ -360,11 +371,9 @@ footer { padding: 54px 40px; border-top: 1px solid rgba(201,168,76,0.15); }
       <h2 class="stitle">Hablemos de tu <span class="g">destino</span></h2>
       <p class="sdesc" style="margin-left:auto; margin-right:auto;">Déjanos tus datos y un resumen de tu proyecto. Te contactaremos para agendar una reunión de diagnóstico.</p>
     </div>
-    <form class="contact-form" action="https://formsubmit.co/tu-correo@empresa.com" method="POST">
+    <form class="contact-form" id="form-turismo" action="https://formsubmit.co/ajax/info@lunacreativa.cl" method="POST" onsubmit="submitContactTurismo(event)">
       <input type="text" name="_honey" style="display:none">
       <input type="hidden" name="_subject" value="Nuevo Lead: Turismo y Hospitalidad — LUNA">
-      <input type="hidden" name="_next" value="https://lunacreativa.cl/gracias">
-      <input type="hidden" name="_captcha" value="false">
       <input type="hidden" name="Sector" value="Turismo y Hospitalidad">
       <div class="c-field">
         <label class="c-label">Nombre o Empresa</label>
@@ -399,10 +408,12 @@ footer { padding: 54px 40px; border-top: 1px solid rgba(201,168,76,0.15); }
         <label class="c-label">Mensaje</label>
         <textarea name="Mensaje" class="c-textarea" required placeholder="Cuéntanos brevemente sobre tu destino y tus objetivos..."></textarea>
       </div>
-      <button type="submit" class="c-submit">Enviar Mensaje</button>
+      <button type="submit" class="c-submit" id="submit-btn-turismo">Enviar Mensaje</button>
     </form>
   </div>
 </section>
+
+<div id="toast-turismo">✓ Mensaje enviado correctamente</div>
 
 <footer>
   <div class="foot">
@@ -418,6 +429,38 @@ footer { padding: 54px 40px; border-top: 1px solid rgba(201,168,76,0.15); }
   </div>
 </footer>
 
+<script>
+(function(){ const t = document.getElementById('ev-track-turismo'); if (t) t.innerHTML += t.innerHTML; })();
+if (window.lucide) lucide.createIcons();
 
+function submitContactTurismo(e) {
+  e.preventDefault();
+  const form = e.target;
+  const btn = document.getElementById('submit-btn-turismo');
+  const toast = document.getElementById('toast-turismo');
+  btn.disabled = true;
+  btn.textContent = 'Enviando...';
+  fetch(form.action, { method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' } })
+    .then(response => {
+      if (response.ok) {
+        toast.textContent = '✓ Mensaje enviado. El equipo de LUNA te contactará pronto.';
+        toast.classList.remove('error');
+        toast.classList.add('show');
+        form.reset();
+      } else {
+        throw new Error('Error en el servidor');
+      }
+    })
+    .catch(() => {
+      toast.textContent = '✕ Error al enviar el mensaje. Inténtalo de nuevo.';
+      toast.classList.add('show', 'error');
+    })
+    .finally(() => {
+      btn.disabled = false;
+      btn.textContent = 'Enviar Mensaje';
+      setTimeout(() => toast.classList.remove('show', 'error'), 4500);
+    });
+}
+</script>
 </body>
 </html>
